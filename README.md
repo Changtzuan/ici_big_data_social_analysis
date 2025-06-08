@@ -1,6 +1,6 @@
-# Project Title
+# Trump's New World: Media Framing in Taiwan
 
-[Enter the title of your project]
+A Comparative Study of the 2024 Election
 
 ## Project Description
 
