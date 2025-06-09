@@ -20,34 +20,37 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 ## Analysis
 
-📊 Analysis Methods & Visualizations
+### Analysis Methods & Visualizations
 We applied a full-stack NLP pipeline and multiple visualization techniques to uncover how Taiwanese media framed Donald Trump during the 2024 U.S. presidential election. Below are the core analyses and their associated insights:
 
-🧠 Vocabulary & Framing Patterns
+### 🧠 Vocabulary & Framing Patterns
 ![Q1_ Top 20 Trump-Related Words (Media Composition)](https://github.com/user-attachments/assets/2cf27ff1-8fb6-4772-a875-26af842ed947)
 
 We analyzed word usage across outlets using CKIPTagger-based segmentation. Common patterns included high-frequency personal names (Trump, Biden, Harris) and evaluative terms like believe, may, and state, indicating personalized and subjective media framing.
 
-📰 Sentiment by Media Outlet
+### 📰 Sentiment by Media Outlet
 ![Q2 Framing Distribution](https://github.com/user-attachments/assets/3152fcfc-411d-4d51-b109-ccbb7e901784)
-![Q2_ Standardized Residual Heatmap of Media × Framing Labels](https://github.com/user-attachments/assets/f1a8fab0-90c7-4701-8182-f8b0025b60d3)
 
 We compared sentiment polarity (Supportive / Neutral / Oppositional) using both CSentiPackage and LLM-based labeling. PTS and Liberty Times showed more positive framing, while CNA and ETtoday remained mostly neutral—reflecting ideological variance across the media landscape.
 
-🔍 Statistical Significance of Framing
-Visualization: Standardized residual (z-score) plot
+### 🔍 Statistical Significance of Framing
+![Q2_ Standardized Residual Heatmap of Media × Framing Labels](https://github.com/user-attachments/assets/f1a8fab0-90c7-4701-8182-f8b0025b60d3)
+
 A chi-square test revealed statistically significant framing deviations. For instance, PTS had more positive coverage than expected, while ETtoday significantly underrepresented such framing—highlighting bias patterns aligned with outlet orientation.
 
-🕒 Temporal Coverage Trends
-Visualization: Time-series line graph
+### 🕒 Temporal Coverage Trends
+![Q4_ 報導數量時間圖(完整的)](https://github.com/user-attachments/assets/e2fc6140-e650-41ef-b88f-9c93ab8af58b)
+
 Media attention followed a U-shaped curve: peaking after Biden’s withdrawal (July) and Trump’s victory (November), with a lull mid-campaign. The sharp rise in late October aligned with election momentum and reflected media re-engagement.
 
-📈 Sentiment Shifts Over Time
-Visualization: Stacked bar or line chart of sentiment by week
+### 📈 Sentiment Shifts Over Time
+![Q4_ 立場變化時間圖(完整的)](https://github.com/user-attachments/assets/13cf260a-8c63-4d5f-87aa-4a4e4d56e7eb)
+
 Neutral reporting dominated (>75%) throughout the cycle. However, positive sentiment peaked after Trump’s election win, suggesting media shifted tone in response to political outcomes. Negative coverage remained minimal.
 
-🧾 Entity Network Analysis
-Visualization: Bar chart of entity type frequency
+### 🧾 Entity Network Analysis
+![Q4_ Distribution of Entity Types (Trump-Related News)](https://github.com/user-attachments/assets/a6435686-a950-4e3a-8045-7d4cbabfef74)
+
 Using NER, we observed that PERSON entities (Trump, Harris, etc.) dominated, followed by geopolitical (GPE) and organizational (ORG) terms. This reflects both the personalization of news and its anchoring in global political context.
 
 🤖 LLM Performance Benchmark
