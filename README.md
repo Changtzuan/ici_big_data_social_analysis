@@ -54,7 +54,7 @@ Neutral reporting dominated (>75%) throughout the cycle. However, positive senti
 Using NER, we observed that PERSON entities (Trump, Harris, etc.) dominated, followed by geopolitical (GPE) and organizational (ORG) terms. This reflects both the personalization of news and its anchoring in global political context.
 
 ### 🤖 LLM Performance Benchmark
-![InnoFest](https://github.com/user-attachments/assets/25dfa506-4be7-4f16-a906-34ba29529a13)
+![InnoFest (1)](https://github.com/user-attachments/assets/af0f843e-a586-466b-8053-7168baf64fc5)
 
 ![InnoFest (4)](https://github.com/user-attachments/assets/d07fe31a-63e0-47f3-84b4-609ee8eda014)
 
