@@ -14,6 +14,10 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 [Provide instructions on how to get started with your project, including any necessary software or data. Include installation instructions and any prerequisites or dependencies that are required.]
 
+## File Structure
+
+[Describe the file structure of your project, including how the files are organized and what each file contains. Be sure to explain the purpose of each file and how they are related to one another.]
+
 ```plaintext
 ici_big_data_social_analysis\
 ├── LLMsSCORE\
@@ -45,10 +49,37 @@ ici_big_data_social_analysis\
 │   ├── trump_articles_POS_TXT\
 │   ├── udn_articles_sampled\
 ```
+---
 
-## File Structure
+### **R Requirements (`R_requirements.R`)**
 
-[Describe the file structure of your project, including how the files are organized and what each file contains. Be sure to explain the purpose of each file and how they are related to one another.]
+```R
+# 需要安裝的 R 套件
+install.packages("readr")       # 用於讀寫 CSV
+install.packages("rvest")       # 用於網頁爬取
+install.packages("dplyr")       # 資料處理
+install.packages("stringr")     # 字串處理
+install.packages("purrr")       # 函數式編程
+install.packages("httr")        # HTTP 請求
+install.packages("progressr")   # 進度條
+install.packages("progress")    # 顯示進度條
+install.packages("tidyr")       # 資料整理
+install.packages("tidyverse")   # 整合的資料處理套件
+```
+
+---
+
+### **Python Requirements (`requirements.txt`)**
+
+```plaintext
+openai==0.27.0
+pandas==1.5.3
+re==2.2.1
+selenium==4.10.0
+playwright==1.37.0
+asyncio==3.4.3
+ckiptagger==0.2.1
+```
 
 ## Analysis
 
