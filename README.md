@@ -14,6 +14,37 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 [Provide instructions on how to get started with your project, including any necessary software or data. Include installation instructions and any prerequisites or dependencies that are required.]
 
+ici_big_data_social_analysis\
+├── LLMsSCORE\
+├── NDCdata\
+│   ├── ndc_articles_sampled\
+│   ├── trump_articles\
+│   ├── trump_articles_POS_TXT\
+│   ├── 兩岸新聞\
+│   │   ├── trump_articles\
+│   ├── 即時新聞\
+│   │   ├── trump_articles\
+│   ├── 國際新聞\
+│   │   ├── trump_articles\
+│   ├── 地方新聞\
+│   │   ├── trump_articles\
+│   ├── 政治新聞\
+│   │   ├── trump_articles\
+│   ├── 文化體育新聞\
+│   │   ├── trump_articles\
+│   ├── 生活新聞\
+│   │   ├── trump_articles\
+│   ├── 社會新聞\
+│   │   ├── trump_articles\
+│   ├── 財經新聞\
+│       ├── trump_articles\
+├── sample_articles\
+├── UDNdata\
+│   ├── trump_articles\
+│   ├── trump_articles_POS_TXT\
+│   ├── udn_articles_sampled\
+
+
 ## File Structure
 
 [Describe the file structure of your project, including how the files are organized and what each file contains. Be sure to explain the purpose of each file and how they are related to one another.]
