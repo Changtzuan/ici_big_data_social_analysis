@@ -1,13 +1,7 @@
 library(tidyverse)
 
-trump_results <- read_csv("trump_results.csv")
-udn_results <- read_csv("udn_results.csv")
-
-trump_ner <- read_csv("trump_articles_NER.csv")
-udn_ner <- read_csv("udn_articles_NER.csv")
-
-trump_pos <- read_csv("trump_articles_POS.csv")
-udn_pos <- read_csv("udn_articles_POS.csv")
+trump_results <- read_csv("NDCdata/ndc_articles_sampled.csv")
+udn_results <- read_csv("UDNdata/udn_articles_sampled.csv")
 
 # 處理 UDN 資料
 udn_results$folder <- sapply(udn_results$版次, function(x) {
@@ -49,7 +43,8 @@ trump_filtered <- trump_results[, common_columns, drop = FALSE]
 
 # 合併兩個Dataframe
 combined_results <- rbind(
-  udn_filtered %>% mutate(Source = "UDN"),
-  trump_filtered %>% mutate(Source = "Trump")
+  trump_filtered %>% mutate(Source = "NDC"),
+  udn_filtered %>% mutate(Source = "UDN")
 )
-# write.csv(combined_results, "combined_results.csv")
+
+write.csv(combined_results, "sampled_articles.csv", row.names = FALSE, fileEncoding = "UTF-8")
