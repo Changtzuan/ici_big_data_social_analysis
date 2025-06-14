@@ -14,9 +14,8 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 [Provide instructions on how to get started with your project, including any necessary software or data. Include installation instructions and any prerequisites or dependencies that are required.]
 
-ici_big_data_social_analysis\
-
 ```plaintext
+ici_big_data_social_analysis\
 ├── LLMsSCORE\
 ├── NDCdata\
 │   ├── ndc_articles_sampled\
