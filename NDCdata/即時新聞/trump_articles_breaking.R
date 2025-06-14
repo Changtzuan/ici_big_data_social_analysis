@@ -15,7 +15,7 @@ df <- read_csv("即時新聞.csv")
 
 # 將「發布日期」轉換成日期時間
 df <- df %>%
-  mutate(pubdate = as.POSIXct(pubdate, format = "%m/%d/%Y %H:%M:%S"))
+  mutate(發布日期 = as.POSIXct(發布日期, format = "%m/%d/%Y %H:%M:%S"))
 
 # 建立抓取內文函數
 get_article <- function(url) {
@@ -41,40 +41,19 @@ get_article <- function(url) {
   })
 }
 
-# 過濾日期範圍
-df_filtered <- df %>%
-  filter(
-    pubdate >= as.POSIXct("2024-07-22") &
-      pubdate <= as.POSIXct("2024-11-07")
-  )
-
-# 過濾新聞來源
-df_filtered <- df_filtered %>%
-  filter(!str_detect(link, "pts.org.tw"))
-
-# ✅ 加上進度條來抓全文
-# 初始化一個累積的資料框
-df_complete <- df_filtered
-
 repeat {
   # 使用進度條包裹處理邏輯
   df_filtered <- with_progress({
-    p <- progressor(along = df_filtered$link)
+    p <- progressor(along = df_filtered$新聞連結)
     df_filtered %>%
-      mutate(新聞全文 = map_chr(link, ~ {
+      mutate(新聞全文 = map_chr(新聞連結, ~ {
         p()  # 每次進度更新
         get_article(.x)
       }))
   })
   
-  # 更新累積的資料框
-  df_complete <- df_complete %>%
-    left_join(df_filtered, by = "link", suffix = c(".old", "")) %>%
-    mutate(新聞全文 = ifelse(is.na(新聞全文), 新聞全文.old, 新聞全文)) %>%
-    select(-新聞全文.old)
-  
-  # 檢查是否還有錯誤
-  failed <- df_complete %>% filter(is.na(新聞全文))
+  # 檢查是否還有錯誤（以空字串 "" 或 NA 表示失敗）
+  failed <- df_filtered %>% filter(is.na(新聞全文))
   
   # 如果沒有失敗的項目，跳出迴圈
   if (nrow(failed) == 0) {
@@ -86,11 +65,32 @@ repeat {
   }
 }
 
-# 篩選：標題、前言、或全文中出現「川普」
-df_trump <- df_complete %>%
+# 過濾日期範圍
+df_filtered <- df %>%
   filter(
-    str_detect(title, "川普") |
-      str_detect(description, "川普") |
+    發布日期 >= as.POSIXct("2024-07-22") &
+      發布日期 <= as.POSIXct("2024-11-07")
+  )
+
+# 過濾新聞來源
+df_filtered <- df_filtered %>%
+  filter(!str_detect(新聞連結, "pts.org.tw"))
+
+# ✅ 加上進度條來抓全文
+df_filtered <- with_progress({
+  p <- progressor(along = df_filtered$新聞連結)
+  df_filtered %>%
+    mutate(新聞全文 = map_chr(新聞連結, ~ {
+      p()  # 每次進度更新
+      get_article(.x)
+    }))
+})
+
+# 篩選：標題、前言、或全文中出現「川普」
+df_trump <- df_filtered %>%
+  filter(
+    str_detect(新聞標題, "川普") |
+      str_detect(新聞前言, "川普") |
       str_detect(新聞全文, "川普")
   )
 
@@ -98,7 +98,7 @@ df_trump <- df_complete %>%
 dir.create("trump_articles_breaking", showWarnings = FALSE)
 
 # 儲存符合的全文為 .txt
-walk2(df_trump$uid, df_trump$新聞全文, ~ {
+walk2(df_trump$識別碼, df_trump$新聞全文, ~ {
   write_lines(.y, file = paste0("trump_articles_breaking/", .x, ".txt"))
 })
 

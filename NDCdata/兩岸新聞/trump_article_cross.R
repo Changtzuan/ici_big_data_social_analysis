@@ -10,7 +10,6 @@ library(progressr)
 handlers(global = TRUE)
 handlers("progress")
 
-setwd("~/Documents/NCCU/大三下/大數據/final project/兩岸新聞")
 # 載入CSV
 df <- read_csv("兩岸新聞_2025-04-30.csv")
 

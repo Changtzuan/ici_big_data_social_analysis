@@ -1,0 +1,1 @@
+錯誤： Failure when receiving data from the peer [www.ettoday.net]: OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0
