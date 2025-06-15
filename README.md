@@ -145,7 +145,6 @@ flowchart LR
 - 🤖 **AI Analysis**: Automated labeling and comparison
 - 📈 **Final Analysis**: Comprehensive results synthesis
 
----
 
 ### **Installation Requirements**
 
@@ -180,7 +179,6 @@ For CKIPTagger, please refer to their official GitHub repository for detailed in
 
 Make sure to download the required pre-trained model files as explained in the CKIPTagger documentation.
 
----
 
 ### **Execution Flow Summary**
 
@@ -194,7 +192,6 @@ Data Collection → [Text Processing | Sampling | Data Integration]
                         Final Analysis
 ```
 
----
 
 ### **Important Notes**
 
@@ -206,8 +203,6 @@ Data Collection → [Text Processing | Sampling | Data Integration]
 - **CKIPTagger Setup**: Ensure CKIPTagger models are properly installed before running text processing scripts
 - **API Configuration**: Configure OpenAI API keys before running AI analysis scripts
 - **File Management**: Ensure output directories exist and have proper write permissions
-
----
 
 ### **Troubleshooting**
 
@@ -269,8 +264,6 @@ ici_big_data_social_analysis\                  # Project root directory
 ├── Sample.py                                  # Randomly selects 100 news articles for manual labeling
 ```
 
----
-
 ### **File Relationships**
 
 | **Output File**             | **Source Code**              | **Description**                                                                 |
@@ -288,9 +281,6 @@ ici_big_data_social_analysis\                  # Project root directory
 | `all_articles.csv`          | `MergeData.R`             | Combined dataset of all NDC and UDN news articles                            |
 | `all_articles_results.csv`  | `Label_OneStep.py`        | Sentiment and label analysis results for all news articles using OpenAI-o3   |
 | `Labelled.csv`              | Manual labeling           | 100 manually labeled news articles                                           |
-
----
-
 
 
 ## Analysis
