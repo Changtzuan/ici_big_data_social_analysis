@@ -484,25 +484,27 @@ We evaluated multiple LLMs—including ChatGPT (4o, 4.1, o3), DeepSeek, Qwen, an
 
 ## Acknowledgments
 
-[Thank any individuals or organizations who provided support or assistance during your project, including funding sources or data providers.]
+We would like to sincerely thank **Professor Pien** for every valuable guidance and support throughout this project. We also acknowledge the **United Daily News (UDN)** and the **National Development Council (NDC) Open Data Portal** for providing access to the news and open government datasets that made our analysis possible. This project would not have been achievable without the support of our academic mentors and data providers.
 
 ## References
 
 ### Data Sources
-UDN Knowledge Database (聯合報資料庫) – via National Development Council Open Data Portal
+**UDN Knowledge Database** – Provided by United Daily News
 
-News articles from:
+**National Development Council Open Data Portal** – Used to access additional government-authorized media data
+
+News articles were collected from:
 
 United Daily News (UDN) / PTS News Network (公視新聞) / Liberty Times (自由時報) / Economic Daily News (經濟日報) / ETtoday News / Central News Agency (CNA)
 
 ### Analytical Tools & Methods
-Web Crawling & Data Cleaning: 
+**Web Crawling & Data Cleaning:**
 R with dplyr, CSV conversion
 
-Text Preprocessing: 
+**Text Preprocessing:**
 CKIPTagger for Mandarin NLP / Word Segmentation (WS) / Part-of-Speech Tagging (POS) / Named Entity Recognition (NER)
 
-Sentiment Analysis Tools:
+**Sentiment Analysis Tools:**
 Custom prompt engineering with multiple LLMs:
 ChatGPT (4o, 4.1) / Meta LLaMA 3.3 / DeepSeek R1 / Qwen-3 / Microsoft Phi-4 / Google Gemma 3
 
