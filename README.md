@@ -156,37 +156,17 @@ Central News Agency (CNA)
 ### Analytical Tools & Methods
 Web Crawling & Data Cleaning: R with dplyr, CSV conversion
 
-1. Text Preprocessing: CKIPTagger for Mandarin NLP:
+Text Preprocessing: CKIPTagger for Mandarin NLP:
 
-  Word Segmentation (WS)
+Word Segmentation (WS) / Part-of-Speech Tagging (POS) / Named Entity Recognition (NER)
 
-  Part-of-Speech Tagging (POS)
+Sentiment Analysis Tools:
 
-  Named Entity Recognition (NER)
+CSentiPackage by Academia Sinica NLP Lab
 
-2. Sentiment Analysis Tools:
+Custom prompt engineering with multiple LLMs:
 
-  CSentiPackage by Academia Sinica NLP Lab
-
-3. Custom prompt engineering with multiple LLMs:
-
-  ChatGPT (4o, 4.1)
-
-  Meta LLaMA 3.3
-
-  DeepSeek R1
-
-  Qwen-3
-
-  Microsoft Phi-4
-
-  Google Gemma 3
+ChatGPT (4o, 4.1) / Meta LLaMA 3.3 / DeepSeek R1 / Qwen-3 / Microsoft Phi-4 / Google Gemma 3
 
 ### Statistical & Text Analysis
-Chi-Square Test for independence
-
-Standardized Residuals (Z-scores)
-
-Topic Modeling
-
-Correspondence Analysis
+Chi-Square Test for independence / Standardized Residuals (Z-scores) / Topic Modeling / Correspondence Analysis
