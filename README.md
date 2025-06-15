@@ -454,9 +454,9 @@ We analyzed word usage across outlets using CKIPTagger-based segmentation. Commo
 *A chi-square test revealed statistically significant framing deviations. For instance, PTS had more positive coverage than expected, while ETtoday significantly underrepresented such framing—highlighting bias patterns aligned with outlet orientation.*
 
 ### 🕒 Temporal Coverage Trends
-圖
+![Q4_ 報導數量時間圖(完整的)](https://github.com/user-attachments/assets/8ad760de-57a0-4dab-ada2-5ac7fd8b004b)
 
-*Media attention followed a U-shaped curve: peaking after Biden’s withdrawal (July) and Trump’s victory (November), with a lull mid-campaign. The sharp rise in late October aligned with election momentum and reflected media re-engagement.*
+Media attention followed a U-shaped curve: peaking after Biden’s withdrawal (July) and Trump’s victory (November), with a lull mid-campaign. The sharp rise in late October aligned with election momentum and reflected media re-engagement.
 
 ### 📈 Sentiment Shifts Over Time
 圖
@@ -464,9 +464,9 @@ We analyzed word usage across outlets using CKIPTagger-based segmentation. Commo
 *Neutral reporting dominated (>75%) throughout the cycle. However, positive sentiment peaked after Trump’s election win, suggesting media shifted tone in response to political outcomes. Negative coverage remained minimal.*
 
 ### 🧾 Entity Network Analysis
-圖
+![Q4_ Distribution of Entity Types (Trump-Related News)](https://github.com/user-attachments/assets/a040dac5-c0af-4813-9010-1d22e6c7886e)
 
-*Using NER, we observed that PERSON entities (Trump, Harris, etc.) dominated, followed by geopolitical (GPE) and organizational (ORG) terms. This reflects both the personalization of news and its anchoring in global political context.*
+Using NER, we observed that PERSON entities (Trump, Harris, etc.) dominated, followed by geopolitical (GPE) and organizational (ORG) terms. This reflects both the personalization of news and its anchoring in global political context.
 
 ### 🤖 LLM Performance Benchmark
 ![InnoFest (1)](https://github.com/user-attachments/assets/c06e6ebe-68a6-45e2-a243-b1a56051416a)
