@@ -494,19 +494,37 @@ We would like to sincerely thank **Professor Pien** for every valuable guidance 
 **National Development Council Open Data Portal** – Used to access additional government-authorized media data
 
 News articles were collected from:
-
-United Daily News (UDN) / PTS News Network (公視新聞) / Liberty Times (自由時報) / Economic Daily News (經濟日報) / ETtoday News / Central News Agency (CNA)
+- United Daily News (UDN)
+- PTS News Network (公視新聞)
+- Liberty Times (自由時報)
+- Economic Daily News (經濟日報)
+- ETtoday News
+- Central News Agency (CNA)
 
 ### Analytical Tools & Methods
 **Web Crawling & Data Cleaning:**
-R with dplyr, CSV conversion
+- R with dplyr
+- CSV conversion
 
 **Text Preprocessing:**
-CKIPTagger for Mandarin NLP / Word Segmentation (WS) / Part-of-Speech Tagging (POS) / Named Entity Recognition (NER)
+- CKIPTagger for Mandarin NLP
+- Word Segmentation (WS)
+- Part-of-Speech Tagging (POS)
+- Named Entity Recognition (NER)
 
 **Sentiment Analysis Tools:**
 Custom prompt engineering with multiple LLMs:
-ChatGPT (4o, 4.1) / Meta LLaMA 3.3 / DeepSeek R1 / Qwen-3 / Microsoft Phi-4 / Google Gemma 3
+- **OpenAI Models**: ChatGPT-o3, ChatGPT-o1, ChatGPT-o1-mini, ChatGPT-gpt-4o
+- **DeepSeek Models**: DeepSeek R1 0528, DeepSeek V3 0324
+- **Meta Models**: Llama 3.3 (70B), Llama 3.3 (19B)
+- **NVIDIA Models**: Llama 3.1 (253B)
+- **Google Models**: Gemma 3 (27B)
+- **Microsoft Models**: Phi 4
+- **Qwen Models**: Qwen3-235B-A22B, QwQ (32B)
+- **Local Models**: Llama-3-Taiwan-70B
 
 ### Statistical & Text Analysis
-Chi-Square Test for independence / Standardized Residuals (Z-scores) / Topic Modeling / Correspondence Analysis
+- Chi-Square Test for independence
+- Standardized Residuals (Z-scores)
+- Topic Modeling
+- Correspondence Analysis
