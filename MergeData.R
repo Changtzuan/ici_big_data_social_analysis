@@ -1,7 +1,7 @@
 library(tidyverse)
 
-trump_results <- read_csv("NDCdata/ndc_articles_sampled.csv")
-udn_results <- read_csv("UDNdata/udn_articles_sampled.csv")
+trump_results <- read_csv("NDCdata/ndc_articles.csv")
+udn_results <- read_csv("UDNdata/udn_articles.csv")
 
 # 處理 UDN 資料
 udn_results$folder <- sapply(udn_results$版次, function(x) {
@@ -47,4 +47,4 @@ combined_results <- rbind(
   udn_filtered %>% mutate(Source = "UDN")
 )
 
-write.csv(combined_results, "sampled_articles.csv", row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(combined_results, "all_articles.csv", row.names = FALSE, fileEncoding = "UTF-8")
