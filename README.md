@@ -116,6 +116,138 @@ ckiptagger==0.2.1             # Chinese word segmentation (used in R via reticul
 tqdm==4.67.1                  # Progress bar display
 ```
 
+---
+
+### Project Workflow
+
+#### Workflow Diagram
+
+```mermaid
+flowchart LR
+    subgraph DC ["📊 Data Collection Phase"]
+      direction TB
+      subgraph NEWS ["News Sources"]
+        direction TB
+        A1["🏛️ NDC News Collection<br/>(Various Category R Scripts)"] 
+        A2["📺 PTS News Collection<br/>(PTSdata.py)"]
+        A3["📰 UDN News Collection<br/>(UDNdata.py)"]
+      end
+      
+      A1 --> B1["📄 NDC Articles<br/>ndc_articles.csv"]
+      A2 -.-> B2["📄 PTS Articles<br/>pts_articles.csv"]
+      A3 --> B3["📄 UDN Articles<br/>udn_articles.csv"]
+      
+      B2 -.->|Manual Merge| B1
+    end
+    
+    %% Direct connections from Data Collection to branches
+    DC --> TP_DIST[ ]
+    DC --> SB_DIST[ ]
+    DC --> DI_DIST[ ]
+    
+    subgraph TP ["🔍 Text Processing Branch"]
+      direction TB
+      TP_DIST -.-> D1["⚙️ CKIP_NDC.R<br/>Chinese NLP Processing"]
+      TP_DIST -.-> D2["⚙️ CKIP_UDN.R<br/>Chinese NLP Processing"]
+      
+      D1 --> E1["📋 NDC Processed<br/>• ndc_articles_POS.csv<br/>• ndc_articles_NER.csv"]
+      D2 --> E2["📋 UDN Processed<br/>• udn_articles_POS.csv<br/>• udn_articles_NER.csv"]
+    end
+    
+    subgraph SB ["🎯 Sampling Branch"]
+      direction TB
+      SB_DIST -.-> F1["🎲 Sample.py<br/>Random Selection<br/>(NDC + UDN Articles)"]
+      F1 --> G1["📝 100 Sampled Articles<br/>• ndc_articles_sampled.csv<br/>• udn_articles_sampled.csv"]
+      G1 --> H2["🔧 MergeData.R<br/>(Sampling)"]
+      H2 --> I2["📊 Sampled Dataset<br/>sampled_articles.csv"]
+    end
+    
+    subgraph DI ["🔗 Data Integration Branch"]
+      direction TB
+      DI_DIST -.-> H1["🔧 MergeData.R<br/>(Complete Dataset)<br/>(NDC + UDN Articles)"]
+      H1 --> I1["📊 Complete Dataset<br/>all_articles.csv"]
+    end
+    
+    %% Manual Analysis entry
+    I2 --> MA_DIST[ ]
+    
+    subgraph MA ["👥 Manual Analysis Phase"]
+      direction TB
+      MA_DIST -.-> J1["✍️ Manual Labeling<br/>Ground Truth Creation"]
+      J1 --> K1["📋 Labelled Dataset<br/>Labelled.csv"]
+    end
+    
+    %% AI Analysis entries
+    I1 --> AI_DIST1[ ]
+    K1 --> AI_DIST2[ ]
+    
+    subgraph AI ["🤖 AI Analysis Phase"]
+      direction TB
+      AI_DIST1 -.-> L1["🚀 AI Analysis<br/>(Complete Dataset)"]
+      AI_DIST2 -.-> L2["🚀 AI Analysis<br/>(Labeled Dataset)"]
+      
+      L1 --> M1["🔧 Label_OneStep.py<br/>Label_TwoSteps.py"]
+      L2 --> M2["🔧 Label_OneStep.py<br/>Label_TwoSteps.py"]
+      
+      M1 --> N1["📈 AI Results<br/>all_articles_results.csv"]
+      M2 --> N2["📊 LLMsSCORE<br/>Model Comparison Results"]
+    end
+    
+    %% Final Analysis entries
+    E1 --> FA_DIST1[ ]
+    E2 --> FA_DIST2[ ]
+    N1 --> FA_DIST3[ ]
+    N2 --> FA_DIST4[ ]
+    
+    subgraph FA ["📈 Final Analysis Phase"]
+      direction TB
+      FA_DIST1 -.-> O1["🔬 Comprehensive Analysis"]
+      FA_DIST2 -.-> O1
+      FA_DIST3 -.-> O1
+      FA_DIST4 -.-> O1
+      O1 --> P1["📋 Final Research Results<br/>Combined Insights"]
+    end
+    
+    %% Styling for subgraphs
+    style DC fill:#e1f5fe,stroke:#01579b,stroke-width:4px,color:#000
+    style NEWS fill:#f0f8ff,stroke:#4682b4,stroke-width:2px,color:#000
+    style TP fill:#f3e5f5,stroke:#4a148c,stroke-width:4px,color:#000
+    style SB fill:#fff3e0,stroke:#e65100,stroke-width:4px,color:#000
+    style DI fill:#e8f5e8,stroke:#1b5e20,stroke-width:4px,color:#000
+    style MA fill:#fce4ec,stroke:#880e4f,stroke-width:4px,color:#000
+    style AI fill:#fff8e1,stroke:#f57f17,stroke-width:4px,color:#000
+    style FA fill:#f1f8e9,stroke:#33691e,stroke-width:4px,color:#000
+    
+    %% Styling for nodes
+    classDef collection fill:#e1f5fe,stroke:#01579b,stroke-width:3px,color:#000,font-size:14px
+    classDef processing fill:#f3e5f5,stroke:#4a148c,stroke-width:3px,color:#000,font-size:14px
+    classDef sampling fill:#fff3e0,stroke:#e65100,stroke-width:3px,color:#000,font-size:14px
+    classDef integration fill:#e8f5e8,stroke:#1b5e20,stroke-width:3px,color:#000,font-size:14px
+    classDef manual fill:#fce4ec,stroke:#880e4f,stroke-width:3px,color:#000,font-size:14px
+    classDef ai fill:#fff8e1,stroke:#f57f17,stroke-width:3px,color:#000,font-size:14px
+    classDef final fill:#f1f8e9,stroke:#33691e,stroke-width:4px,color:#000,font-size:14px
+    classDef data fill:#f5f5f5,stroke:#424242,stroke-width:2px,color:#000,font-size:12px
+    classDef invisible fill:transparent,stroke:transparent,color:transparent
+    
+    class A1,A2,A3 collection
+    class D1,D2 processing
+    class F1 sampling
+    class H1,H2 integration
+    class J1 manual
+    class L1,L2,M1,M2 ai
+    class O1 final
+    class B1,B2,B3,E1,E2,G1,I1,I2,K1,N1,N2,P1 data
+    class TP_DIST,SB_DIST,DI_DIST,MA_DIST,AI_DIST1,AI_DIST2,FA_DIST1,FA_DIST2,FA_DIST3,FA_DIST4 invisible
+```
+
+#### Legend
+- 📊 **Data Collection**: Gathering news articles from multiple sources
+- 🔍 **Text Processing**: NLP processing using CKIP tools
+- 🎯 **Sampling**: Random selection for manual analysis
+- 🔗 **Data Integration**: Combining all datasets
+- 👥 **Manual Analysis**: Human labeling for ground truth
+- 🤖 **AI Analysis**: Automated labeling and comparison
+- 📈 **Final Analysis**: Comprehensive results synthesis
 
 ## Analysis
 
