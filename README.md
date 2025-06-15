@@ -136,7 +136,7 @@ We evaluated multiple LLMs (ChatGPT-4o/4.1, DeepSeek, Qwen, LLaMA 3.3, etc.) in 
 
 ## References
 
-*** Data Sources
+### Data Sources
 UDN Knowledge Database (聯合報資料庫) – via National Development Council Open Data Portal
 
 News articles from:
@@ -153,36 +153,36 @@ ETtoday News
 
 Central News Agency (CNA)
 
-*** Analytical Tools & Methods
+### Analytical Tools & Methods
 Web Crawling & Data Cleaning: R with dplyr, CSV conversion
 
-Text Preprocessing: CKIPTagger for Mandarin NLP:
+1. Text Preprocessing: CKIPTagger for Mandarin NLP:
 
-Word Segmentation (WS)
+  Word Segmentation (WS)
 
-Part-of-Speech Tagging (POS)
+  Part-of-Speech Tagging (POS)
 
-Named Entity Recognition (NER)
+  Named Entity Recognition (NER)
 
-Sentiment Analysis Tools:
+2. Sentiment Analysis Tools:
 
-CSentiPackage by Academia Sinica NLP Lab
+  CSentiPackage by Academia Sinica NLP Lab
 
-Custom prompt engineering with multiple LLMs:
+3. Custom prompt engineering with multiple LLMs:
 
-ChatGPT (4o, 4.1)
+  ChatGPT (4o, 4.1)
 
-Meta LLaMA 3.3
+  Meta LLaMA 3.3
 
-DeepSeek R1
+  DeepSeek R1
 
-Qwen-3
+  Qwen-3
 
-Microsoft Phi-4
+  Microsoft Phi-4
 
-Google Gemma 3
+  Google Gemma 3
 
-*** Statistical & Text Analysis
+### Statistical & Text Analysis
 Chi-Square Test for independence
 
 Standardized Residuals (Z-scores)
