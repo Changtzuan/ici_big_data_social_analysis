@@ -32,7 +32,7 @@ ici_big_data_social_analysis\
 │   ├── 各新聞分類資料夾（如兩岸新聞、即時新聞等）
 │   │   ├── trump_articles\             # 該分類的新聞全文
 │   │   ├── trump_articles_[分類].R     # 該分類的爬取與處理程式
-│   │   ├── [分類].csv                  # 該分類的新聞匯出檔案
+│   │   ├── trump_articles_[分類].csv   # 該分類的新聞匯出檔案
 |
 │   ├── ndc_articles.csv                # NDC 新聞的完整資料集
 │   ├── ndc_articles_NER.csv            # NDC 新聞的實體辨識結果
