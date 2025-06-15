@@ -14,80 +14,6 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 [Provide instructions on how to get started with your project, including any necessary software or data. Include installation instructions and any prerequisites or dependencies that are required.]
 
-## File Structure
-
-### **Project Directory Structure**
-
-```plaintext
-ici_big_data_social_analysis\                  # Project root directory
-|
-├── .git\                                      # Git version control folder
-|
-├── LLMsSCORE\                                 # Scores of various LLMs for classifying 100 sampled articles using two prompts
-│   ├── [LLM result-related files]
-│
-├── NDCdata\                                   # NDC news-related data
-│   ├── ndc_articles_sampled\                  # Stores full text of 100 randomly sampled articles
-│   ├── trump_articles\                        # Stores full text of all categorized news articles
-│   ├── trump_articles_POS_TXT\                # Stores WS+POS processed full text of all categorized news articles
-│   ├── [News category folders]                # E.g., Cross-Strait News, Breaking News, etc.
-│   │   ├── trump_articles\                    # Full text of news articles in the specific category
-│   │   ├── trump_articles_[category].R        # Script for scraping and processing news articles in the category
-│   │   ├── trump_articles_[category].csv      # Exported news data for the category (output from trump_articles_[category].R)
-│   ├── ndc_articles.csv                       # Complete dataset of NDC news (output from CKIP_NDC.R)
-│   ├── ndc_articles_NER.csv                   # NER results for NDC news (output from CKIP_NDC.R)
-│   ├── ndc_articles_POS.csv                   # WS+POS results for NDC news (output from CKIP_NDC.R)
-│   ├── ndc_articles_sampled.csv               # 100 randomly sampled NDC news articles (output from Sample.py)
-│   ├── PTSdata.py                             # Script using Playwright to scrape NDC news
-│
-├── UDNdata\                                   # UDN news-related data
-│   ├── trump_articles\                        # Stores full text of all categorized news articles
-│   ├── trump_articles_POS_TXT\                # Stores WS+POS processed full text of all categorized news articles
-│   ├── udn_articles_sampled\                  # Stores full text of 100 randomly sampled articles
-│   ├── udn_articles.csv                       # Complete dataset of UDN news (output from UDNdata.py)
-│   ├── udn_articles_NER.csv                   # NER results for UDN news (output from CKIP_UDN.R)
-│   ├── udn_articles_POS.csv                   # WS+POS results for UDN news (output from CKIP_UDN.R)
-│   ├── udn_articles_sampled.csv               # 100 randomly sampled UDN news articles (output from Sample.py)
-│   ├── UDNdata.py                             # Script using Selenium to scrape UDN news
-│
-├── sample_articles\                           # Stores full text of 100 randomly sampled articles (combined from NDC and UDN)
-│
-├── all_articles.csv                           # Complete dataset of all news articles (output from MergeData.R)
-├── all_articles_results.csv                   # AI model analysis results for all news articles (using OpenAI-o3, output from Label_OneStep.py)
-├── sampled_articles.csv                       # 100 randomly sampled articles (output from MergeData.R)
-├── Labelled.csv                               # 100 manually labeled news articles
-|
-├── CKIP_NDC.R                                 # Uses CKIPTagger to analyze NDC news data
-├── CKIP_UDN.R                                 # Uses CKIPTagger to analyze UDN news data
-├── MergeData.R                                # Combines and processes multiple datasets
-|
-├── Label_OneStep.py                           # Uses OpenAI API for one-step sentiment and label analysis of news articles
-├── Label_TwoSteps.py                          # Uses OpenAI API for two-step sentiment and label analysis of news articles
-├── Sample.py                                  # Randomly selects 100 news articles for manual labeling
-```
-
----
-
-### **File Relationships**
-
-| **Output File**             | **Source Code**              | **Description**                                                                 |
-|-----------------------------|-----------------------------|-------------------------------------------------------------------------------|
-| `trump_articles_[category].csv` | `trump_articles_[category].R` | Exported news data for each category, including the full text of news articles |
-| `ndc_articles.csv`          | `CKIP_NDC.R`               | Complete dataset of NDC news                                                 |
-| `ndc_articles_NER.csv`      | `CKIP_NDC.R`               | NER results for NDC news                                                     |
-| `ndc_articles_POS.csv`      | `CKIP_NDC.R`               | WS+POS results for NDC news                                                  |
-| `ndc_articles_sampled.csv`  | `Sample.py`                | 100 randomly sampled NDC news articles                                       |
-| `udn_articles.csv`          | `UDNdata.py`              | Complete dataset of UDN news                                                 |
-| `udn_articles_NER.csv`      | `CKIP_UDN.R`              | NER results for UDN news                                                     |
-| `udn_articles_POS.csv`      | `CKIP_UDN.R`              | WS+POS results for UDN news                                                  |
-| `udn_articles_sampled.csv`  | `Sample.py`                | 100 randomly sampled UDN news articles                                       |
-| `sampled_articles.csv`      | `MergeData.R`             | Combined 100 randomly sampled articles from NDC and UDN                      |
-| `all_articles.csv`          | `MergeData.R`             | Combined dataset of all NDC and UDN news articles                            |
-| `all_articles_results.csv`  | `Label_OneStep.py`        | Sentiment and label analysis results for all news articles using OpenAI-o3   |
-| `Labelled.csv`              | Manual labeling           | 100 manually labeled news articles                                           |
-
----
-
 ### Project Workflow
 
 #### Workflow Diagram
@@ -289,6 +215,82 @@ Data Collection → [Text Processing | Sampling | Data Integration]
 - **API Rate Limits**: Implement delays between API calls if needed
 - **Encoding Issues**: Ensure UTF-8 encoding for Chinese text processing
 - **Dependencies**: Verify all required packages are installed before execution
+
+
+## File Structure
+
+### **Project Directory Structure**
+
+```plaintext
+ici_big_data_social_analysis\                  # Project root directory
+|
+├── .git\                                      # Git version control folder
+|
+├── LLMsSCORE\                                 # Scores of various LLMs for classifying 100 sampled articles using two prompts
+│   ├── [LLM result-related files]
+│
+├── NDCdata\                                   # NDC news-related data
+│   ├── ndc_articles_sampled\                  # Stores full text of 100 randomly sampled articles
+│   ├── trump_articles\                        # Stores full text of all categorized news articles
+│   ├── trump_articles_POS_TXT\                # Stores WS+POS processed full text of all categorized news articles
+│   ├── [News category folders]                # E.g., Cross-Strait News, Breaking News, etc.
+│   │   ├── trump_articles\                    # Full text of news articles in the specific category
+│   │   ├── trump_articles_[category].R        # Script for scraping and processing news articles in the category
+│   │   ├── trump_articles_[category].csv      # Exported news data for the category (output from trump_articles_[category].R)
+│   ├── ndc_articles.csv                       # Complete dataset of NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_NER.csv                   # NER results for NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_POS.csv                   # WS+POS results for NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_sampled.csv               # 100 randomly sampled NDC news articles (output from Sample.py)
+│   ├── PTSdata.py                             # Script using Playwright to scrape NDC news
+│
+├── UDNdata\                                   # UDN news-related data
+│   ├── trump_articles\                        # Stores full text of all categorized news articles
+│   ├── trump_articles_POS_TXT\                # Stores WS+POS processed full text of all categorized news articles
+│   ├── udn_articles_sampled\                  # Stores full text of 100 randomly sampled articles
+│   ├── udn_articles.csv                       # Complete dataset of UDN news (output from UDNdata.py)
+│   ├── udn_articles_NER.csv                   # NER results for UDN news (output from CKIP_UDN.R)
+│   ├── udn_articles_POS.csv                   # WS+POS results for UDN news (output from CKIP_UDN.R)
+│   ├── udn_articles_sampled.csv               # 100 randomly sampled UDN news articles (output from Sample.py)
+│   ├── UDNdata.py                             # Script using Selenium to scrape UDN news
+│
+├── sample_articles\                           # Stores full text of 100 randomly sampled articles (combined from NDC and UDN)
+│
+├── all_articles.csv                           # Complete dataset of all news articles (output from MergeData.R)
+├── all_articles_results.csv                   # AI model analysis results for all news articles (using OpenAI-o3, output from Label_OneStep.py)
+├── sampled_articles.csv                       # 100 randomly sampled articles (output from MergeData.R)
+├── Labelled.csv                               # 100 manually labeled news articles
+|
+├── CKIP_NDC.R                                 # Uses CKIPTagger to analyze NDC news data
+├── CKIP_UDN.R                                 # Uses CKIPTagger to analyze UDN news data
+├── MergeData.R                                # Combines and processes multiple datasets
+|
+├── Label_OneStep.py                           # Uses OpenAI API for one-step sentiment and label analysis of news articles
+├── Label_TwoSteps.py                          # Uses OpenAI API for two-step sentiment and label analysis of news articles
+├── Sample.py                                  # Randomly selects 100 news articles for manual labeling
+```
+
+---
+
+### **File Relationships**
+
+| **Output File**             | **Source Code**              | **Description**                                                                 |
+|-----------------------------|-----------------------------|-------------------------------------------------------------------------------|
+| `trump_articles_[category].csv` | `trump_articles_[category].R` | Exported news data for each category, including the full text of news articles |
+| `ndc_articles.csv`          | `CKIP_NDC.R`               | Complete dataset of NDC news                                                 |
+| `ndc_articles_NER.csv`      | `CKIP_NDC.R`               | NER results for NDC news                                                     |
+| `ndc_articles_POS.csv`      | `CKIP_NDC.R`               | WS+POS results for NDC news                                                  |
+| `ndc_articles_sampled.csv`  | `Sample.py`                | 100 randomly sampled NDC news articles                                       |
+| `udn_articles.csv`          | `UDNdata.py`              | Complete dataset of UDN news                                                 |
+| `udn_articles_NER.csv`      | `CKIP_UDN.R`              | NER results for UDN news                                                     |
+| `udn_articles_POS.csv`      | `CKIP_UDN.R`              | WS+POS results for UDN news                                                  |
+| `udn_articles_sampled.csv`  | `Sample.py`                | 100 randomly sampled UDN news articles                                       |
+| `sampled_articles.csv`      | `MergeData.R`             | Combined 100 randomly sampled articles from NDC and UDN                      |
+| `all_articles.csv`          | `MergeData.R`             | Combined dataset of all NDC and UDN news articles                            |
+| `all_articles_results.csv`  | `Label_OneStep.py`        | Sentiment and label analysis results for all news articles using OpenAI-o3   |
+| `Labelled.csv`              | Manual labeling           | 100 manually labeled news articles                                           |
+
+---
+
 
 
 ## Analysis
