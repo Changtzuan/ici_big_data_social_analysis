@@ -20,6 +20,7 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 ```plaintext
 ici_big_data_social_analysis\
+|
 ├── LLMsSCORE\                          # 各 LLM 以兩種 Prompt 對 100 筆 Sample 進行分類的分數
 │   ├── [LLM 結果相關檔案]
 │
@@ -27,24 +28,29 @@ ici_big_data_social_analysis\
 │   ├── ndc_articles_sampled\           # 儲存隨機挑選出的 100 筆 Sample 的全文
 │   ├── trump_articles\                 # 儲存所有新聞分類的全文
 │   ├── trump_articles_POS_TXT\         # 儲存所有新聞分類的 WS+POS 處理後的全文
+|
 │   ├── 各新聞分類資料夾（如兩岸新聞、即時新聞等）
 │   │   ├── trump_articles\             # 該分類的新聞全文
 │   │   ├── trump_articles_[分類].R     # 該分類的爬取與處理程式
 │   │   ├── [分類].csv                  # 該分類的新聞匯出檔案
+|
 │   ├── ndc_articles.csv                # NDC 新聞的完整資料集
 │   ├── ndc_articles_NER.csv            # NDC 新聞的實體辨識結果
 │   ├── ndc_articles_POS.csv            # NDC 新聞的 WS+POS 處理結果
 │   ├── ndc_articles_sampled.csv        # 隨機挑選出的 100 筆 Sample 資料
+|
 │   ├── PTSdata.py                      # 使用 Playwright 爬取公視新聞資料
 │
 ├── UDNdata\                            # UDN 新聞相關資料
 │   ├── trump_articles\                 # 儲存所有新聞分類的全文
 │   ├── trump_articles_POS_TXT\         # 儲存所有新聞分類的 WS+POS 處理後的全文
 │   ├── udn_articles_sampled\           # 儲存隨機挑選出的 100 筆 Sample 的全文
+|
 │   ├── udn_articles.csv                # UDN 新聞的完整資料集
 │   ├── udn_articles_NER.csv            # UDN 新聞的實體辨識結果
 │   ├── udn_articles_POS.csv            # UDN 新聞的 WS+POS 處理結果
 │   ├── udn_articles_sampled.csv        # 隨機挑選出的 100 筆 Sample 資料
+|
 │   ├── UDNdata.py                      # 使用 Selenium 爬取 UDN 新聞資料
 │
 ├── sample_articles\                    # 儲存隨機挑選出的 100 筆 Sample 的全文（整合自 NDC 與 UDN）
@@ -57,6 +63,7 @@ ici_big_data_social_analysis\
 ├── CKIP_UDN.R                          # 使用 CKIPTagger 分析 UDN 新聞資料
 ├── CKIP_NDC.R                          # 使用 CKIPTagger 分析 NDC 新聞資料
 ├── MergeData.R                         # 整合與處理多個資料集
+|
 ├── Label_OneStep.py                    # 使用 OpenAI API 進行單步驟的新聞情感與標籤分析
 ├── Label_TwoSteps.py                   # 使用 OpenAI API 進行兩步驟的新聞情感與標籤分析
 ├── Sample.py                           # 隨機挑選出 100 筆新聞供人工標記的程式
