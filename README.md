@@ -473,7 +473,7 @@ We analyzed word usage across outlets using CKIPTagger-based segmentation. Commo
 
 ![InnoFest (4)](https://github.com/user-attachments/assets/d07fe31a-63e0-47f3-84b4-609ee8eda014)
 
-We evaluated multiple LLMs (ChatGPT-4o/4.1, DeepSeek, Qwen, LLaMA 3.3, etc.) in both single-stage and multi-stage sentiment classification. ChatGPT and DeepSeek performed best in one-step reasoning, but complex prompts exposed limitations in model reliability and precision across tasks.
+We evaluated multiple LLMs—including ChatGPT (4o, 4.1, o3), DeepSeek, Qwen, and LLaMA 3.3, with the use of both single-stage and multi-stage sentiment classification strategies. Our goal was to assess their ability to accurately label politically nuanced Mandarin news content. ChatGPT o3 consistently demonstrated the most balanced performance across precision, contextual reasoning, and label stability. 
 ## Results
 
 [Provide a summary of your findings and conclusions, including any recommendations or implications for future research. Be sure to explain how your results address your research question or problem statement.]
