@@ -16,8 +16,6 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 ## File Structure
 
-[Describe the file structure of your project, including how the files are organized and what each file contains. Be sure to explain the purpose of each file and how they are related to one another.]
-
 ### **Project Directory Structure**
 
 ```plaintext
@@ -87,34 +85,6 @@ ici_big_data_social_analysis\                  # Project root directory
 | `all_articles.csv`          | `MergeData.R`             | Combined dataset of all NDC and UDN news articles                            |
 | `all_articles_results.csv`  | `Label_OneStep.py`        | Sentiment and label analysis results for all news articles using OpenAI-o3   |
 | `Labelled.csv`              | Manual labeling           | 100 manually labeled news articles                                           |
-
----
-
-### **Installation Requirements**
-
-#### **R Requirements**
-
-```R
-install.packages("readr")       # Read and write CSV files
-install.packages("rvest")       # Web scraping
-install.packages("dplyr")       # Data manipulation
-install.packages("stringr")     # String processing
-install.packages("purrr")       # Functional programming
-install.packages("httr")        # HTTP requests
-install.packages("progressr")   # Progress bar display
-install.packages("reticulate")  # Calling Python from R
-```
-
-#### **Python Requirements**
-
-```plaintext
-openai==1.78.1                # Interaction with OpenAI API
-pandas==2.0.3                 # Data manipulation
-playwright==1.48.0            # Asynchronous browser automation
-selenium==4.10.0              # Browser automation
-ckiptagger==0.2.1             # Chinese word segmentation (used in R via reticulate)
-tqdm==4.67.1                  # Progress bar display
-```
 
 ---
 
@@ -248,6 +218,78 @@ flowchart LR
 - 👥 **Manual Analysis**: Human labeling for ground truth
 - 🤖 **AI Analysis**: Automated labeling and comparison
 - 📈 **Final Analysis**: Comprehensive results synthesis
+
+---
+
+### **Installation Requirements**
+
+#### **R Environment**
+Make sure you have R installed. Install the required R packages by running the following commands in your R console:
+
+```R
+install.packages("readr")       # For reading and writing CSV files
+install.packages("rvest")       # For web scraping
+install.packages("dplyr")       # For data manipulation
+install.packages("stringr")     # For string processing
+install.packages("purrr")       # For functional programming
+install.packages("httr")        # For HTTP requests
+install.packages("progressr")   # For progress bar display
+install.packages("reticulate")  # To call Python from R
+```
+
+#### **Python Environment**
+Ensure you have Python installed (recommended version: 3.8+). Install the required Python packages using `pip`:
+
+```plaintext
+pip install openai==1.78.1       # Interaction with OpenAI API
+pip install pandas==2.0.3        # Data manipulation
+pip install playwright==1.48.0   # Asynchronous browser automation
+pip install selenium==4.10.0     # Browser automation
+pip install ckiptagger==0.2.1    # Chinese word segmentation
+pip install tqdm==4.67.1         # Progress bar display
+```
+
+#### **Installing CKIPTagger**
+For CKIPTagger, please refer to their official GitHub repository for detailed installation instructions: [https://github.com/ckiplab/ckiptagger](https://github.com/ckiplab/ckiptagger).
+
+Make sure to download the required pre-trained model files as explained in the CKIPTagger documentation.
+
+---
+
+### **Execution Flow Summary**
+
+```
+Data Collection → [Text Processing | Sampling | Data Integration] 
+                     ↓              ↓            ↓
+                Text Results   Manual Analysis  Complete Dataset
+                     ↓              ↓            ↓
+                     └──── AI Analysis Phase ────┘
+                              ↓
+                        Final Analysis
+```
+
+---
+
+### **Important Notes**
+
+- **Parallel Execution**: Phases 2 (Branches A, B, C) can be run in parallel after Phase 1 completion
+- **Dependencies**: 
+  - Phase 3 (Manual Analysis) requires Branch B (Sampling) completion
+  - Phase 4 (AI Analysis) requires Branches B and C completion
+  - Phase 5 (Final Analysis) requires all previous phases
+- **CKIPTagger Setup**: Ensure CKIPTagger models are properly installed before running text processing scripts
+- **API Configuration**: Configure OpenAI API keys before running AI analysis scripts
+- **File Management**: Ensure output directories exist and have proper write permissions
+
+---
+
+### **Troubleshooting**
+
+- **Memory Issues**: For large datasets, consider processing in batches
+- **API Rate Limits**: Implement delays between API calls if needed
+- **Encoding Issues**: Ensure UTF-8 encoding for Chinese text processing
+- **Dependencies**: Verify all required packages are installed before execution
+
 
 ## Analysis
 
