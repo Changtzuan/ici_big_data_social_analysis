@@ -12,7 +12,120 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 ## Getting Started
 
-[Provide instructions on how to get started with your project, including any necessary software or data. Include installation instructions and any prerequisites or dependencies that are required.]
+This project analyzes news sentiment regarding Trump using multiple data sources and AI models. Follow the instructions below to set up and run the complete analysis pipeline.
+
+
+### **Data Sources**
+
+Our research utilizes two primary data sources for comprehensive news analysis:
+
+#### **🏛️ National Development Council (NDC) Open Data Portal**
+- **Source Type**: Government authorized data
+- **Data Volume**: ~6,000 articles (filtered from over 900,000 articles)
+- **Content Filter**: All articles contain keyword "川普" (Trump)
+- **Data Quality**: Official government data with high reliability
+- **Access Method**: Web scraping through R scripts
+
+#### **📰 UDN Knowledge Database** 
+- **Source Type**: Commercial news media
+- **Data Volume**: ~1,000 articles with full text
+- **Content Filter**: All articles contain keyword "川普" (Trump)
+- **Coverage**: Two major news sources
+- **Access Method**: Web scraping through Python scripts
+
+#### **📊 Data Structure**
+Each collected article contains:
+- **Headlines and subheadlines**: Primary content identifiers
+- **Full article content**: Complete text for analysis
+- **News category/section**: Topic classification
+- **Publication date**: Temporal analysis capability
+- **Source media outlet**: Origin identification
+
+#### **🗞️ Covered News Sources**
+**UDN Group:**
+- UDN (聯合報)
+- Economic Daily News (經濟日報)
+
+**NDC Sources:**
+- PTS News (公視新聞)
+- Liberty Times (自由時報)
+- ETtoday News (ETtoday 新聞)
+- Central News Agency (中央社)
+
+
+### **AI Models Used**
+
+This project evaluates multiple state-of-the-art language models for sentiment classification:
+
+#### **📋 Model List**
+- **OpenAI Models**: ChatGPT-o3, ChatGPT-o1, ChatGPT-o1-mini, ChatGPT-gpt-4o
+- **DeepSeek Models**: DeepSeek R1 0528, DeepSeek V3 0324
+- **Meta Models**: Llama 3.3 (70B), Llama 3.3 (19B)
+- **NVIDIA Models**: Llama 3.1 (253B)
+- **Google Models**: Gemma 3 (27B)
+- **Microsoft Models**: Phi 4
+- **Qwen Models**: Qwen3-235B-A22B, QwQ (32B)
+- **Local Models**: Llama-3-Taiwan-70B
+
+#### **🎯 Classification Approaches**
+
+**Single-Stage Classification (Approach 1):**
+```python
+prompt = (
+    "你現在是新聞情緒分類專家，將分類新聞內容對於川普是支持、中立、反對、無關。\n\n"
+    "請按照下列標準進行情緒分類：\n\n"
+    "中立：對於川普的相關內容，客觀陳述事實，文字平鋪直敘，不帶情緒色彩。\n\n"
+    "支持：對於川普的相關內容，正面傳達對川普有利的訊息，或讓讀者對川普產生好印象。例如：強調其政績、領袖特質、正面詞彙、支持者的聲音，或明顯貶低其對手。\n\n"
+    "反對：對於川普的相關內容，負面傳達對川普不利的訊息，或讓讀者對川普產生負面印象。例如：強調爭議、負面事件、批評性措辭、引用反對者觀點居多。\n\n"
+    "無關：如果內容與川普完全無關。\n\n"
+    "請仔細閱讀以下新聞標題及內容，評估這篇新聞對川普的立場，請不要回傳其他文字或標點符號，只回傳支持、中立、反對、無關：\n\n"
+    f"新聞標題：{title}\n"
+    f"新聞出自：{media}\n"
+    f"新聞全文：{news_content}"
+)
+```
+
+**Two-Stage Reasoning Classification (Approach 2):**
+
+*Step 1: Emotion Sentence Extraction*
+```python
+prompt_step1 = (
+    "你是一位專精於新聞情感分析的AI。你的任務是仔細閱讀以下新聞內容，並專注於找出任何對主要實體「川普」帶有情感色彩的描述。\n\n"
+    "請遵循以下指示：\n\n"
+    "1.  **識別情感句：** 從新聞文本中，逐句提取所有直接描述「川普」並帶有明顯正面或負面情感（例如：讚揚、批評、喜愛、厭惡、嘲諷、同情等）的句子。請列出這些句子的原文。\n"
+    "2.  **中立內容處理：** 如果新聞內容僅為客觀事實陳述，用詞中性，未對「川普」表達任何情感偏向，且可能平衡呈現了不同觀點，請直接回覆「本新聞內容為中立。」，無需列舉句子。\n"
+    "3.  **無關內容處理：** 如果新聞內容完全未提及「川普」，或者僅在與新聞主題無關的背景資訊中極其簡略地提及，且該提及不帶任何情感色彩，請直接回覆「本新聞內容為無關。」，無需列舉句子。\n"
+    "4.  **輸出格式：**\n"
+    "    *   若為情感句，請直接列出原文，每句一行。不要添加任何額外的解釋、編號或評論。\n"
+    "    *   若為中立或無關，則按上述指示回覆特定短語。\n\n"
+    "請開始分析以下新聞標題與內容："
+)
+
+completion = client.chat.completions.create(
+    model="o3",  # 使用最新的模型
+    messages=[{"role": "system", "content": prompt_step1},
+              {"role": "user", "content": f"{title}\n\n{news_content}"}],
+    service_tier="flex"
+)
+```
+
+*Step 2: Sentiment Classification*
+```python
+prompt_step2 = (
+    "你是一位情感分析專家。以下文字是從一篇關於「川普」的新聞中提取出的帶有情感色彩的句子。請基於這些句子，判斷新聞內容對「川普」的整體情感立場。\n\n"
+    "請遵循以下指示：\n\n"
+    "1.  **判斷立場：** 綜合分析提供的所有句子，判斷整體情感是「支持」川普還是「反對」川普。\n"
+    "2.  **簡潔回覆：** 你的回答必須且只能是「支持」或「反對」這兩個詞中的一個。不要包含任何其他文字、解釋、標點符號或空格。\n\n"
+    "請分析以下內容並給出你的判斷："
+)
+
+senti_completion = client.chat.completions.create(
+    model="o3",  # 使用最新的模型
+    messages=[{"role": "system", "content": prompt_step2}, 
+              {"role": "user", "content": response_content}],
+    service_tier="flex"
+)
+```
 
 ### Project Workflow
 
@@ -148,6 +261,12 @@ flowchart LR
 
 ### **Installation Requirements**
 
+#### **Prerequisites**
+- **R**: Version 4.0+ recommended
+- **Python**: Version 3.8+ recommended
+- **OpenAI API Key**: Required for AI analysis
+- **Internet Connection**: Required for data collection and API calls
+
 #### **R Environment**
 Make sure you have R installed. Install the required R packages by running the following commands in your R console:
 
@@ -174,10 +293,23 @@ pip install ckiptagger==0.2.1    # Chinese word segmentation
 pip install tqdm==4.67.1         # Progress bar display
 ```
 
-#### **Installing CKIPTagger**
-For CKIPTagger, please refer to their official GitHub repository for detailed installation instructions: [https://github.com/ckiplab/ckiptagger](https://github.com/ckiplab/ckiptagger).
+#### **CKIPTagger Setup**
+CKIPTagger is essential for Chinese NLP processing. Follow these steps:
 
-Make sure to download the required pre-trained model files as explained in the CKIPTagger documentation.
+1. **Installation**: Follow the official guide at [https://github.com/ckiplab/ckiptagger](https://github.com/ckiplab/ckiptagger)
+2. **Model Download**: Download the required pre-trained models as specified in their documentation
+3. **Verification**: Test the installation before running the main scripts
+
+#### **API Configuration**
+- **OpenAI API**: 
+   - Obtain an API key from OpenAI
+   - Set the API key in your environment variables
+   - Configure rate limits to avoid API quota issues
+
+```python
+import openai
+client = openai.OpenAI(api_key="your-api-key-here")
+```
 
 
 ### **Execution Flow Summary**
@@ -204,13 +336,31 @@ Data Collection → [Text Processing | Sampling | Data Integration]
 - **API Configuration**: Configure OpenAI API keys before running AI analysis scripts
 - **File Management**: Ensure output directories exist and have proper write permissions
 
+### **Expected Outputs**
+
+After completing all steps, you should have:
+
+- **📊 Raw Data**: `ndc_articles.csv`, `udn_articles.csv`, `pts_articles.csv`
+- **🔍 Processed Data**: `*_POS.csv`, `*_NER.csv` files with NLP annotations
+- **🎯 Sample Data**: `sampled_articles.csv` with 100 selected articles
+- **👥 Ground Truth**: `Labelled.csv` with manual sentiment labels
+- **🤖 AI Results**: Model performance comparisons and sentiment predictions
+- **📈 Final Analysis**: Comprehensive research insights and findings
+
 ### **Troubleshooting**
 
-- **Memory Issues**: For large datasets, consider processing in batches
-- **API Rate Limits**: Implement delays between API calls if needed
-- **Encoding Issues**: Ensure UTF-8 encoding for Chinese text processing
-- **Dependencies**: Verify all required packages are installed before execution
+#### **Common Issues**
+- **Memory Errors**: Process large datasets in smaller batches
+- **API Rate Limits**: Implement delays between API calls
+- **Encoding Issues**: Ensure UTF-8 encoding for Chinese text
+- **Missing Dependencies**: Verify all packages are properly installed
+- **Network Timeouts**: Check internet connection for data collection
 
+#### **Support Resources**
+- **CKIPTagger Issues**: Refer to their GitHub repository
+- **OpenAI API Problems**: Check OpenAI documentation
+- **R Package Issues**: Use `install.packages()` with dependencies=TRUE
+- **Python Environment**: Consider using virtual environments
 
 ## File Structure
 
