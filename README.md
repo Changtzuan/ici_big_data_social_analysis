@@ -18,83 +18,104 @@ Our analysis included chi-square tests, topic modeling, and correspondence analy
 
 [Describe the file structure of your project, including how the files are organized and what each file contains. Be sure to explain the purpose of each file and how they are related to one another.]
 
+### **Project Directory Structure**
+
 ```plaintext
-ici_big_data_social_analysis\
+ici_big_data_social_analysis\                  # Project root directory
 |
-├── LLMsSCORE\                          # 各 LLM 以兩種 Prompt 對 100 筆 Sample 進行分類的分數
-│   ├── [LLM 結果相關檔案]
+├── .git\                                      # Git version control folder
+|
+├── LLMsSCORE\                                 # Scores of various LLMs for classifying 100 sampled articles using two prompts
+│   ├── [LLM result-related files]
 │
-├── NDCdata\                            # NDC 新聞相關資料
-│   ├── ndc_articles_sampled\           # 儲存隨機挑選出的 100 筆 Sample 的全文
-│   ├── trump_articles\                 # 儲存所有新聞分類的全文
-│   ├── trump_articles_POS_TXT\         # 儲存所有新聞分類的 WS+POS 處理後的全文
-|
-│   ├── 各新聞分類資料夾（如兩岸新聞、即時新聞等）
-│   │   ├── trump_articles\             # 該分類的新聞全文
-│   │   ├── trump_articles_[分類].R     # 該分類的爬取與處理程式
-│   │   ├── trump_articles_[分類].csv   # 該分類的新聞匯出檔案
-|
-│   ├── ndc_articles.csv                # NDC 新聞的完整資料集
-│   ├── ndc_articles_NER.csv            # NDC 新聞的實體辨識結果
-│   ├── ndc_articles_POS.csv            # NDC 新聞的 WS+POS 處理結果
-│   ├── ndc_articles_sampled.csv        # 隨機挑選出的 100 筆 Sample 資料
-|
-│   ├── PTSdata.py                      # 使用 Playwright 爬取公視新聞資料
+├── NDCdata\                                   # NDC news-related data
+│   ├── ndc_articles_sampled\                  # Stores full text of 100 randomly sampled articles
+│   ├── trump_articles\                        # Stores full text of all categorized news articles
+│   ├── trump_articles_POS_TXT\                # Stores WS+POS processed full text of all categorized news articles
+│   ├── [News category folders]                # E.g., Cross-Strait News, Breaking News, etc.
+│   │   ├── trump_articles\                    # Full text of news articles in the specific category
+│   │   ├── trump_articles_[category].R        # Script for scraping and processing news articles in the category
+│   │   ├── trump_articles_[category].csv      # Exported news data for the category (output from trump_articles_[category].R)
+│   ├── ndc_articles.csv                       # Complete dataset of NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_NER.csv                   # NER results for NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_POS.csv                   # WS+POS results for NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_sampled.csv               # 100 randomly sampled NDC news articles (output from Sample.py)
+│   ├── PTSdata.py                             # Script using Playwright to scrape NDC news
 │
-├── UDNdata\                            # UDN 新聞相關資料
-│   ├── trump_articles\                 # 儲存所有新聞分類的全文
-│   ├── trump_articles_POS_TXT\         # 儲存所有新聞分類的 WS+POS 處理後的全文
-│   ├── udn_articles_sampled\           # 儲存隨機挑選出的 100 筆 Sample 的全文
-|
-│   ├── udn_articles.csv                # UDN 新聞的完整資料集
-│   ├── udn_articles_NER.csv            # UDN 新聞的實體辨識結果
-│   ├── udn_articles_POS.csv            # UDN 新聞的 WS+POS 處理結果
-│   ├── udn_articles_sampled.csv        # 隨機挑選出的 100 筆 Sample 資料
-|
-│   ├── UDNdata.py                      # 使用 Selenium 爬取 UDN 新聞資料
+├── UDNdata\                                   # UDN news-related data
+│   ├── trump_articles\                        # Stores full text of all categorized news articles
+│   ├── trump_articles_POS_TXT\                # Stores WS+POS processed full text of all categorized news articles
+│   ├── udn_articles_sampled\                  # Stores full text of 100 randomly sampled articles
+│   ├── udn_articles.csv                       # Complete dataset of UDN news (output from UDNdata.py)
+│   ├── udn_articles_NER.csv                   # NER results for UDN news (output from CKIP_UDN.R)
+│   ├── udn_articles_POS.csv                   # WS+POS results for UDN news (output from CKIP_UDN.R)
+│   ├── udn_articles_sampled.csv               # 100 randomly sampled UDN news articles (output from Sample.py)
+│   ├── UDNdata.py                             # Script using Selenium to scrape UDN news
 │
-├── sample_articles\                    # 儲存隨機挑選出的 100 筆 Sample 的全文（整合自 NDC 與 UDN）
+├── sample_articles\                           # Stores full text of 100 randomly sampled articles (combined from NDC and UDN)
 │
-├── all_articles.csv                    # 所有新聞的完整資料集
-├── all_articles_results.csv            # 使用 AI 模型分析後的所有新聞結果
-├── sampled_articles.csv                # 隨機挑選出的 100 筆新聞資料
-├── Labelled.csv                        # 人工標註完成的 100 筆新聞資料
+├── all_articles.csv                           # Complete dataset of all news articles (output from MergeData.R)
+├── all_articles_results.csv                   # AI model analysis results for all news articles (using OpenAI-o3, output from Label_OneStep.py)
+├── sampled_articles.csv                       # 100 randomly sampled articles (output from MergeData.R)
+├── Labelled.csv                               # 100 manually labeled news articles
 |
-├── CKIP_UDN.R                          # 使用 CKIPTagger 分析 UDN 新聞資料
-├── CKIP_NDC.R                          # 使用 CKIPTagger 分析 NDC 新聞資料
-├── MergeData.R                         # 整合與處理多個資料集
+├── CKIP_NDC.R                                 # Uses CKIPTagger to analyze NDC news data
+├── CKIP_UDN.R                                 # Uses CKIPTagger to analyze UDN news data
+├── MergeData.R                                # Combines and processes multiple datasets
 |
-├── Label_OneStep.py                    # 使用 OpenAI API 進行單步驟的新聞情感與標籤分析
-├── Label_TwoSteps.py                   # 使用 OpenAI API 進行兩步驟的新聞情感與標籤分析
-├── Sample.py                           # 隨機挑選出 100 筆新聞供人工標記的程式
+├── Label_OneStep.py                           # Uses OpenAI API for one-step sentiment and label analysis of news articles
+├── Label_TwoSteps.py                          # Uses OpenAI API for two-step sentiment and label analysis of news articles
+├── Sample.py                                  # Randomly selects 100 news articles for manual labeling
 ```
+
 ---
 
-### **R Requirements**
+### **File Relationships**
+
+| **Output File**             | **Source Code**              | **Description**                                                                 |
+|-----------------------------|-----------------------------|-------------------------------------------------------------------------------|
+| `trump_articles_[category].csv` | `trump_articles_[category].R` | Exported news data for each category, including the full text of news articles |
+| `ndc_articles.csv`          | `CKIP_NDC.R`               | Complete dataset of NDC news                                                 |
+| `ndc_articles_NER.csv`      | `CKIP_NDC.R`               | NER results for NDC news                                                     |
+| `ndc_articles_POS.csv`      | `CKIP_NDC.R`               | WS+POS results for NDC news                                                  |
+| `ndc_articles_sampled.csv`  | `Sample.py`                | 100 randomly sampled NDC news articles                                       |
+| `udn_articles.csv`          | `UDNdata.py`              | Complete dataset of UDN news                                                 |
+| `udn_articles_NER.csv`      | `CKIP_UDN.R`              | NER results for UDN news                                                     |
+| `udn_articles_POS.csv`      | `CKIP_UDN.R`              | WS+POS results for UDN news                                                  |
+| `udn_articles_sampled.csv`  | `Sample.py`                | 100 randomly sampled UDN news articles                                       |
+| `sampled_articles.csv`      | `MergeData.R`             | Combined 100 randomly sampled articles from NDC and UDN                      |
+| `all_articles.csv`          | `MergeData.R`             | Combined dataset of all NDC and UDN news articles                            |
+| `all_articles_results.csv`  | `Label_OneStep.py`        | Sentiment and label analysis results for all news articles using OpenAI-o3   |
+| `Labelled.csv`              | Manual labeling           | 100 manually labeled news articles                                           |
+
+---
+
+### **Installation Requirements**
+
+#### **R Requirements**
 
 ```R
-install.packages("readr")       # 用於讀寫 CSV
-install.packages("rvest")       # 用於網頁爬取
-install.packages("dplyr")       # 資料處理
-install.packages("stringr")     # 字串處理
-install.packages("purrr")       # 函數式編程
-install.packages("httr")        # HTTP 請求
-install.packages("progressr")   # 進度條
-install.packages("reticulate")  # 用於在 R 中調用 Python 套件
+install.packages("readr")       # Read and write CSV files
+install.packages("rvest")       # Web scraping
+install.packages("dplyr")       # Data manipulation
+install.packages("stringr")     # String processing
+install.packages("purrr")       # Functional programming
+install.packages("httr")        # HTTP requests
+install.packages("progressr")   # Progress bar display
+install.packages("reticulate")  # Calling Python from R
 ```
 
----
-
-### **Python Requirements**
+#### **Python Requirements**
 
 ```plaintext
-openai==1.78.1                # 與 OpenAI API 的交互
-pandas==2.0.3                 # 資料處理
-playwright==1.48.0            # 非同步瀏覽器自動化
-selenium==4.10.0              # 瀏覽器自動化
-ckiptagger==0.2.1             # 中文分詞（R 中透過 reticulate 使用）
-tqdm==4.67.1                  # 進度條顯示
+openai==1.78.1                # Interaction with OpenAI API
+pandas==2.0.3                 # Data manipulation
+playwright==1.48.0            # Asynchronous browser automation
+selenium==4.10.0              # Browser automation
+ckiptagger==0.2.1             # Chinese word segmentation (used in R via reticulate)
+tqdm==4.67.1                  # Progress bar display
 ```
+
 
 ## Analysis
 
