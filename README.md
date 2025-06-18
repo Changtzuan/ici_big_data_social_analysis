@@ -480,10 +480,13 @@ We evaluated multiple LLMs—including ChatGPT (4o, 4.1, o3), DeepSeek, Qwen, an
 
 ## Contributors
 
-林佳瑢 Julia Lin:
-唐羽諾 Ronald Tang:
-魏予瑄 Annabelle Wei:
-張子安 Andy Chang:
+| Avatar | Name | Role(s) |
+|--------|------|---------|
+| <img src="https://github.com/CJuuuuuuu.png" width="40"/> | [林佳瑢 Julia Lin](https://github.com/CJuuuuuuu) | Project manager, program writer, data mining, data labelling, LLM evaluation tester |
+| <img src="https://github.com/Tang-Yunuo.png" width="40"/> | [唐羽諾 Ronald Tang](https://github.com/Tang-Yunuo) | Program writer, data visualization |
+| <img src="https://github.com/abw77.png" width="40"/> | [魏予瑄 Annabelle Wei](https://github.com/abw77) | Program writer, data collection, data visualization |
+| <img src="https://github.com/Changtzuan.png" width="40"/> | [張子安 Andy Chang](https://github.com/Changtzuan) | Program writer, data collection, presentation design |
+
 ## Acknowledgments
 
 We would like to sincerely thank **Professor Pien** for every valuable guidance and support throughout this project. We also acknowledge the **United Daily News (UDN)** and the **National Development Council (NDC) Open Data Portal** for providing access to the news and open government datasets that made our analysis possible. This project would not have been achievable without the support of our academic mentors and data providers.
