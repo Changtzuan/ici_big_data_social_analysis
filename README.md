@@ -8,7 +8,7 @@ This project explores how Taiwanese media framed Donald Trump during the 2024 U.
 
 For the sentiment evaluation, the core aim of the project was to benchmark the labeling and reasoning performance of leading large language models (LLMs) on Mandarin political news. We evaluated several LLMs such as ChatGPT-4o/4.1/o3, LLaMA 3.3, Qwen, and DeepSeek, using two classification frameworks: a single-stage direct sentiment classification, and a two-step reasoning-based labeling process with custom prompts. Accuracy was compared and calculated against human-labeled samples, revealing significant differences across models and prompt strategies.
 
-Eventually, ChatGPT o3 demonstrated the most reliable and consistent performance. All visualizations and analytical results in this project are then based on its labeling output. Our analysis included chi-square tests, topic modeling, and correspondence analysis to reveal ideological patterns and framing biases across media outlets. This project illustrates how LLM-driven NLP workflows can be applied to multilingual media research, providing insight into political discourse and the computational challenges of sentiment modeling in non-English contexts.
+Eventually, ChatGPT-o3 demonstrated the most reliable and consistent performance. All visualizations and analytical results in this project are then based on its labeling output. Our analysis included chi-square tests, topic modeling, and correspondence analysis to reveal ideological patterns and framing biases across media outlets. This project illustrates how LLM-driven NLP workflows can be applied to multilingual media research, providing insight into political discourse and the computational challenges of sentiment modeling in non-English contexts.
 
 ## Getting Started
 
@@ -480,8 +480,10 @@ We evaluated multiple LLMs—including ChatGPT (4o, 4.1, o3), DeepSeek, Qwen, an
 
 ## Contributors
 
-[List the contributors to your project and describe their roles and responsibilities.]
-
+林佳瑢 Julia Lin:
+唐羽諾 Ronald Tang:
+魏予瑄 Annabelle Wei:
+張子安 Andy Chang:
 ## Acknowledgments
 
 We would like to sincerely thank **Professor Pien** for every valuable guidance and support throughout this project. We also acknowledge the **United Daily News (UDN)** and the **National Development Council (NDC) Open Data Portal** for providing access to the news and open government datasets that made our analysis possible. This project would not have been achievable without the support of our academic mentors and data providers.
