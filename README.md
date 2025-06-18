@@ -465,8 +465,11 @@ Media attention followed a U-shaped curve: peaking after Biden’s withdrawal (J
 
 ### 🧾 Entity Network Analysis
 ![Q4_ Distribution of Entity Types (Trump-Related News)](https://github.com/user-attachments/assets/a040dac5-c0af-4813-9010-1d22e6c7886e)
+![image](https://github.com/user-attachments/assets/04ac3bcf-7dba-42fd-a094-570912f97700)
 
 Using NER, we observed that PERSON entities (Trump, Harris, etc.) dominated, followed by geopolitical (GPE) and organizational (ORG) terms. This reflects both the personalization of news and its anchoring in global political context.
+
+The word cloud above further illustrates this phenomenon in Mandarin-language coverage. Prominent names such as 賀錦麗 (Kamala Harris), 川普 (Donald Trump), and keywords like 總統 (president), 白宮 (White House), and 民主／共和黨 (Democratic/Republican Party) appear frequently. The visual prominence of person names and political terms reinforces the focus on individuals and partisan dynamics in media framing.
 
 ### 🤖 LLM Performance Benchmark
 ![InnoFest (1)](https://github.com/user-attachments/assets/c06e6ebe-68a6-45e2-a243-b1a56051416a)
