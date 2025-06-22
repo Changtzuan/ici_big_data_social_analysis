@@ -4,6 +4,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
+from matplotlib.font_manager import FontProperties
 
 # %% 讀取兩個檔案
 df1 = pd.read_csv("UDNdata/udn_articles_POS.csv") 
@@ -33,10 +34,11 @@ distinctive_tags = [
 ]
 
 # 讀取剪影圖片並生成遮罩
-mask = np.array(Image.open("trump.webp"))  # 替換為你的剪影圖片檔案名稱
+mask = np.array(Image.open("Analysis/trump.webp"))  # 替換為你的剪影圖片檔案名稱
 
 # 指定字型路徑
-font_path = "NotoSansCJKtc-Regular.otf"  # 確保路徑正確
+font_path = "Analysis/NotoSansCJKtc-Regular.otf"  # 確保路徑正確
+font_prop = FontProperties(fname=font_path, size=44)
 
 # %% 過濾停用詞和無效字
 filtered_df = df_combined[~df_combined['word'].isin(stopwords)]
@@ -60,6 +62,41 @@ wc = WordCloud(
 plt.figure(figsize=(12, 9))
 plt.imshow(wc, interpolation='bilinear')
 plt.axis('off')
+plt.show()
+
+# %% 定義要畫的類別
+type_list = [
+    ('全部新聞', None),
+    ('國際新聞', '國際新聞'),
+    ('即時新聞', '即時新聞'),
+    ('政治新聞', '政治新聞'),
+    ('兩岸新聞', '兩岸新聞'),
+    ('財經新聞', '財經新聞')
+]
+
+# %% 畫六張文字雲
+fig, axes = plt.subplots(2, 3, figsize=(48, 28))
+axes = axes.flatten()  # 方便用一維索引
+
+for idx, (title, news_type) in enumerate(type_list):
+    if news_type is None:
+        df_plot = filtered_df
+    else:
+        df_plot = filtered_df[filtered_df['Type'] == news_type]
+    # 按詞語分組並加總次數
+    aggregated_df = df_plot.groupby('word', as_index=False)['count'].sum()
+    word_freq = dict(zip(aggregated_df['word'], aggregated_df['count']))
+    wc = WordCloud(
+        font_path=font_path,
+        background_color='white',
+        mask=mask,
+        contour_color='black'
+    ).generate_from_frequencies(word_freq)
+    axes[idx].imshow(wc, interpolation='bilinear')
+    axes[idx].set_title(title, fontproperties=font_prop)
+    axes[idx].axis('off')
+
+plt.tight_layout()
 plt.show()
 
 # %%

@@ -8,14 +8,14 @@ import re
 import numpy as np
 
 # 指定字型路徑
-font_path = "../../ici_big_data_social_analysis/NotoSansCJKtc-Regular.otf"  # 確保路徑正確
+font_path = "Analysis/NotoSansCJKtc-Regular.otf"  # 確保路徑正確
 font_prop = FontProperties(fname=font_path)
 
 # %% 讀取兩個檔案
 # 讀取數據
-df1 = pd.read_csv("../../ici_big_data_social_analysis/UDNdata/udn_articles_NER.csv") 
-df2 = pd.read_csv("../../ici_big_data_social_analysis/NDCdata/ndc_articles_NER.csv") 
-df = pd.read_csv("../../ici_big_data_social_analysis/all_articles.csv")
+df1 = pd.read_csv("UDNdata/udn_articles_NER.csv") 
+df2 = pd.read_csv("NDCdata/ndc_articles_NER.csv") 
+df = pd.read_csv("all_articles.csv")
 
 # 合併新聞類型到 df1
 df1 = pd.merge(df1, df[['識別碼', 'folder']], left_on='ID', right_on='識別碼', how='left')
@@ -52,8 +52,12 @@ df_combined["ner_words"] = df_combined["ner_result"].apply(extract_important_ent
 filtered_df = df_combined.explode("ner_words").rename(columns={"ner_words": "word"})
 # 只保留有實體的行
 filtered_df = filtered_df[filtered_df["word"].notnull() & (filtered_df["word"] != "")]
-
+# 去掉標點符號
 filtered_df["word"] = filtered_df["word"].replace(r"[，。]", '', regex=True)
+
+# 篩選 Type 欄位
+allowed_types = {"財經新聞"}
+filtered_df = filtered_df[filtered_df["Type"].isin(allowed_types)]
 
 # %% 建立共現矩陣
 # 初始化共現字詞的字典
@@ -70,21 +74,17 @@ for news_id, group in filtered_df.groupby("ID"):
 
 # %% 建立網絡圖
 # 篩選出現次數大於 100 的邊
-allowed_types = {"兩岸新聞"}
-filtered_words = set(filtered_df[filtered_df["Type"].isin(allowed_types)]["word"])
 
 # 1. 取得所有 weight
 all_weights = np.array(list(co_occurrence.values()))
 
 # 2. 計算前 0.1% 的門檻值
-threshold = np.percentile(all_weights, 99.97)  # 99.9百分位
+threshold = np.percentile(all_weights, 99.8)  # 99.9百分位
 
 filtered_co_occurrence = {
     pair: weight
     for pair, weight in co_occurrence.items()
-    # if pair[0] in filtered_words and pair[1] in filtered_words
-    # if (weight > 4000) and (pair[0] != '英特爾')
-    if (weight >= threshold) and (pair[0] != '英特爾')
+    if (weight > threshold) and (pair[0] != '英特爾')
 }
 
 # 初始化 NetworkX 圖
@@ -140,7 +140,7 @@ pos = nx.spring_layout(G, seed=42, k=2, iterations=50)
 nx.draw_networkx_edges(G, pos, edge_color=edge_colors, width=0.5, alpha=0.5)
 
 base_size = 800
-size_per_char = 400
+size_per_char = 1200
 
 node_sizes = []
 for node in G.nodes:
@@ -155,7 +155,7 @@ for node, (x, y) in pos.items():
              ha='center', va='center', color='white', weight='bold')
 
 # 添加標題
-plt.title("詞彙共現網絡圖 - 以「川普」為核心", fontproperties=font_prop, fontsize=20)
+plt.title("Network of Words - Trump as the center (Top 0.2%)", fontproperties=font_prop, fontsize=20)
 
 # 創建圖例
 legend_elements = [
