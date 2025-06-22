@@ -383,27 +383,23 @@ ici_big_data_social_analysis\                                                 # 
 ├── .git\                                                                     # Git version control folder
 |
 ├── Analysis\                                                                 # Analytical scripts, plots, and results
-|
 ├── Q1 Vocabulary & Framing Patterns\                                         # Vocabulary and framing pattern analysis
 │   │   ├── [word cloud images]
 │   │   ├── [top-20 words plots]
 │   │   ├── Q1.R
 │   │   ├── WordCloud.py
-│
 │   ├── Q2 Sentiment by Media Outlet & Statistical Significance of Framing\   # Sentiment & framing significance
 │   │   ├── [chi-square test plots, distribution charts]
 │   │   ├── Q2.R
-│
 │   ├── Q3 Temporal Coverage Trends & Sentiment Shifts Over Time\             # Temporal trends & sentiment shift
 │   │   ├── [trend charts, event-marked plots]
 │   │   ├── Q3.R
-│
 │   ├── Q4 Entity Network Analysis\                                           # Entity network analysis
 │   │   ├── [network graphs, entity distribution plots]
 │   │   ├── Q4.R
 │   │   ├── WordNetwork.py
 │   │   ├── [font files/other resources]
-
+|
 ├── LLMsSCORE\                                                               # Scores of various LLMs for classifying 100 sampled articles using two prompts
 │   ├── [LLM result-related files]
 │
