@@ -470,7 +470,7 @@ ici_big_data_social_analysis\                                                 # 
 ### Analysis Methods & Visualizations
 We applied a full-stack NLP pipeline and multiple visualization techniques to uncover how Taiwanese media framed Donald Trump during the 2024 U.S. presidential election. Below are the core analyses and their associated insights:
 
-### 🧠 Vocabulary & Framing Patterns
+### 🧠 Q1 Vocabulary & Framing Patterns
 
 #### 1. High-Frequency Words & Media Composition
 
@@ -490,7 +490,7 @@ The bar chart of the top 20 Trump-related words shows that **personal names and 
 - **Without Stopword Removal:**  
   In the absence of stopword filtering, the word cloud is heavily dominated by **proper nouns** and **geopolitical terms**: `USA`, `Trump`, `Biden`, `Harris`, `President`, `Taiwan`, `TSMC`, and `market`. This demonstrates that, without filtering, the discourse is shaped primarily by the main actors and locations in the news stories.
 
-### 📰 Framing Patterns by Media Outlet
+### 📰 Q2 Framing Patterns by Media Outlet
 
 
 #### 1. Framing Distribution
@@ -509,17 +509,17 @@ To determine whether these differences in framing are meaningful, a chi-square t
 
 The residual heatmap further illustrates how each media outlet deviates from what would be expected if framing were distributed randomly. For instance, Liberty Times and ETtoday show a much higher frequency of supportive framing than expected, while United Daily News (聯合報) demonstrates a stronger oppositional stance. In contrast, Central News Agency (中央通訊社) significantly underrepresents supportive framing. These patterns, highlighted in the heatmap by positive (red) and negative (blue) residuals, reveal the unique framing biases of each outlet.
 
-### 🕒 Temporal Coverage Trends
+### 🕒 Q3 Temporal Coverage Trends
 ![Q3_ Number of Trump-related news reports during the 2024 election period with big events (weekly statistics).png](Analysis/Q3%20Temporal%20Coverage%20Trends%20&%20Sentiment%20Shifts%20Over%20Time/Number%20of%20Trump-related%20news%20reports%20during%20the%202024%20election%20period%20with%20big%20events%20(weekly%20statistics).png)
 
 The volume of Trump-related news reports during the 2024 election period displayed a distinct U-shaped pattern. Coverage surged sharply following Biden’s withdrawal in late July, marking the first major peak. After this event, the number of articles gradually declined and remained relatively steady through August and September, with only minor fluctuations around other campaign milestones, such as polling leads and candidate debates. However, as the election approached, media attention intensified again. There was a pronounced spike in late October, coinciding with the final campaign push, and coverage reached its highest point immediately after Trump’s victory in early November. These trends suggest that media interest was closely tied to major electoral events, with significant increases in reporting activity both at the outset and conclusion of the campaign period.
 
-### 📈 Sentiment Shifts Over Time
+### 📈 Q3 Sentiment Shifts Over Time
 ![Q3_ Trend of stance proportions over time (by week).png](Analysis/Q3%20Temporal%20Coverage%20Trends%20&%20Sentiment%20Shifts%20Over%20Time/Trend%20of%20stance%20proportions%20over%20time%20(by%20week).png)
 
 Throughout the campaign, neutral reporting was the dominant framing category, consistently accounting for the majority of coverage each week. The proportion of neutral articles generally hovered above 50% and often approached or exceeded 70%, especially during periods of less dramatic political activity. Negative (oppositional) framing maintained a steady presence but rarely surpassed the neutral category, while positive (supportive) coverage remained minimal for most of the campaign. Notably, there was a slight increase in supportive sentiment immediately following Trump’s election victory in early November, indicating a temporary shift in media tone in response to the outcome. Despite this brief uptick, oppositional and supportive stances were both overshadowed by the prevalence of neutral reporting, highlighting the media’s tendency to maintain a balanced perspective during the election cycle.
 
-### 🧾 Entity Network Analysis
+### 🧾 Q4 Entity Network Analysis
 ![Q4_ Network of Words](Analysis/Q4%20Entity%20Network%20Analysis/All_TrumpNetwork.png)
 
 The entity network analysis of Trump-related news reveals several important patterns in both the structure of associations and the types of entities most frequently mentioned. The word network diagram, with Trump at its center, highlights the dense web of connections linking him to a diverse array of individuals, locations, organizations, and political topics. Notably, Trump is closely associated with other key political figures such as Kamala Harris and Joe Biden, as well as with major U.S. states, political parties, and international actors like China, Taiwan, Japan, and Russia. This illustrates the global scope and multifaceted nature of media coverage surrounding Trump, extending beyond domestic politics into international relations and economic affairs. Additionally, the presence of media organizations and news agencies as prominent nodes underscores the influential role of the press in shaping the narrative around Trump.
@@ -527,15 +527,26 @@ The entity network analysis of Trump-related news reveals several important patt
 ![Q4_ Distribution of Entity Types (Trump-Related News)](Analysis/Q4%20Entity%20Network%20Analysis/Distribution%20of%20Entity%20Types%20(Trump-Related%20News).png)
 The bar chart depicting the distribution of entity types in Trump-related news further clarifies the focus of media reporting. The most frequently mentioned entities are people (PERSON) and geopolitical entities (GPE), emphasizing the centrality of individuals and countries or regions in news stories about Trump. Organizations (ORG) and dates (DATE) also feature prominently, reflecting the importance of institutions, political parties, and the timing of events in the news cycle. Quantitative entities, such as numbers, percentages, and monetary amounts, appear regularly, indicating that economic analysis and statistical reporting are common themes. Other entity types, including demographic groups, locations, and specific events, point to the broad and varied contexts in which Trump is discussed.
 
+### **🔍 More Detailed Analyses Available**
+
+For readers seeking deeper insights, additional charts and analyses are provided in the `Analysis` folder. This includes:
+- Media-specific and category-specific versions of the entity network diagrams (Q4)
+- Media breakdowns for vocabulary/framing (Q1)
+- Temporal and sentiment trends by media outlet (Q3)
+Please refer to the relevant subfolders within `Analysis` for these extended visualizations and breakdowns.
+
 ### 🤖 LLM Performance Benchmark
 ![InnoFest (1)](https://github.com/user-attachments/assets/c06e6ebe-68a6-45e2-a243-b1a56051416a)
 
 ![InnoFest (4)](https://github.com/user-attachments/assets/d07fe31a-63e0-47f3-84b4-609ee8eda014)
 
-We evaluated multiple LLMs—including ChatGPT (4o, 4.1, o3), DeepSeek, Qwen, and LLaMA 3.3, with the use of both single-stage and multi-stage sentiment classification strategies. Our goal was to assess their ability to accurately label politically nuanced Mandarin news content. ChatGPT o3 consistently demonstrated the most balanced performance across precision, contextual reasoning, and label stability. 
+We conducted a comprehensive evaluation of various large language models (LLMs), including several versions of ChatGPT (4o, 4.1, o3), DeepSeek, Qwen, and LLaMA 3.3, using both single-stage and multi-stage sentiment classification approaches. The primary objective was to measure each model’s precision and effectiveness in classifying politically nuanced Mandarin news articles. According to our benchmark results, ChatGPT o3 consistently achieved the highest overall performance, excelling in precision, contextual understanding, and the stability of its labeling. This suggests that ChatGPT o3 is particularly well-suited for tasks requiring nuanced interpretation and reliable sentiment analysis in complex political contexts.
+
 ## Results
 
-[Provide a summary of your findings and conclusions, including any recommendations or implications for future research. Be sure to explain how your results address your research question or problem statement.]
+Our analysis found that Taiwanese media coverage of Donald Trump during the 2024 U.S. presidential election was largely neutral, though some outlets consistently showed more supportive or oppositional stances. Coverage peaked around major campaign events, with a brief rise in supportive sentiment following Trump’s victory. Reporting frequently referenced key political figures and international actors, highlighting the global context of the election. Entity network analysis confirmed Trump’s centrality in media narratives and revealed dense links to other prominent individuals and countries. In evaluating large language models for sentiment and framing analysis, we found that while models such as ChatGPT o3 performed relatively well, there is still considerable room for improvement in accurately capturing the nuances of Mandarin political news.
+
+Going forward, enhancing the performance of LLMs in sentiment and framing analysis should be a priority. We recommend further fine-tuning models on high-quality, annotated Mandarin datasets and developing more sophisticated evaluation metrics tailored to the complexities of political reporting. In addition, future research could expand the dataset to include a broader range of Taiwanese media sources and investigate the effects of media framing on public opinion. Collaboration between computational researchers and media scholars will be valuable in refining analytic tools and deepening our understanding of media narratives. Making annotated datasets and analytic resources publicly available would also support transparency and encourage further advancements in this field.
 
 ## Contributors
 
@@ -553,42 +564,65 @@ We would like to sincerely thank **Professor Pien** for every valuable guidance 
 ## References
 
 ### Data Sources
-**UDN Knowledge Database** – Provided by United Daily News
 
-**National Development Council Open Data Portal** – Used to access additional government-authorized media data
+**National Development Council (NDC) Open Data Portal**  
+Official government-authorized news dataset. Over 6,000 articles mentioning "川普" (Trump) were filtered from an initial pool of 900,000+ articles. Accessed via web scraping with custom R scripts.
 
-News articles were collected from:
-- United Daily News (UDN)
-- PTS News Network (公視新聞)
-- Liberty Times (自由時報)
-- Economic Daily News (經濟日報)
-- ETtoday News
-- Central News Agency (CNA)
+**UDN Knowledge Database**  
+Commercial news media database, containing approximately 1,000 full-text articles mentioning "川普" (Trump). Data were collected from United Daily News (UDN) and Economic Daily News via web scraping with Python scripts.
+
+**News Outlets Covered:**  
+- United Daily News (UDN, 聯合報)  
+- Economic Daily News (經濟日報)  
+- PTS News (公視新聞)  
+- Liberty Times (自由時報)  
+- ETtoday News  
+- Central News Agency (CNA, 中央社)  
+
+Each article record includes headlines, subheadlines, full text, news category, publication date, and source outlet.
 
 ### Analytical Tools & Methods
-**Web Crawling & Data Cleaning:**
-- R with dplyr
-- CSV conversion
 
-**Text Preprocessing:**
-- CKIPTagger for Mandarin NLP
-- Word Segmentation (WS)
-- Part-of-Speech Tagging (POS)
-- Named Entity Recognition (NER)
+**Web Crawling & Data Cleaning:**  
+- R (including `readr`, `dplyr`, `tidyr`, `stringr`, `rvest`, `httr`, `purrr`, `progressr`)
+- Python (including `playwright`, `selenium`, `pandas`, `tqdm`)
+- Data conversion to CSV for downstream analysis
 
-**Sentiment Analysis Tools:**
-Custom prompt engineering with multiple LLMs:
-- **OpenAI Models**: ChatGPT-o3, ChatGPT-o1, ChatGPT-o1-mini, ChatGPT-gpt-4o
-- **DeepSeek Models**: DeepSeek R1 0528, DeepSeek V3 0324
-- **Meta Models**: Llama 3.3 (70B), Llama 3.3 (19B)
-- **NVIDIA Models**: Llama 3.1 (253B)
-- **Google Models**: Gemma 3 (27B)
-- **Microsoft Models**: Phi 4
-- **Qwen Models**: Qwen3-235B-A22B, QwQ (32B)
-- **Local Models**: Llama-3-Taiwan-70B
+**Text Preprocessing:**  
+- CKIPTagger for Mandarin Chinese NLP tasks, including:
+  - Word Segmentation (WS)
+  - Part-of-Speech Tagging (POS)
+  - Named Entity Recognition (NER)
+
+**Sampling & Integration:**  
+- Random sampling (Python) for manual annotation  
+- Data integration and merging (R)
+
+**Manual Annotation:**  
+- Ground truth sentiment labels generated by human annotators on 100 sampled articles
+
+### Sentiment Analysis Tools
+
+**Prompt-based Sentiment Classification with Multiple LLMs:**  
+- **OpenAI:** ChatGPT-o3, ChatGPT-o1, ChatGPT-o1-mini, ChatGPT-gpt-4o  
+- **DeepSeek:** DeepSeek R1 0528, DeepSeek V3 0324  
+- **Meta:** Llama 3.3 (70B), Llama 3.3 (19B)  
+- **NVIDIA:** Llama 3.1 (253B)  
+- **Google:** Gemma 3 (27B)  
+- **Microsoft:** Phi 4  
+- **Qwen:** Qwen3-235B-A22B, QwQ (32B)  
+- **Local:** Llama-3-Taiwan-70B  
+
+Two main prompt engineering approaches were used:  
+1. **Single-stage direct classification** (support/neutral/opposition/irrelevant)  
+2. **Two-stage reasoning** (emotion sentence extraction → stance classification)
+
+**Note:** While LLMs such as ChatGPT-o3 demonstrated relatively good performance, our evaluation indicates there remains considerable room for improvement in accurately capturing nuanced sentiment in Mandarin political news.
 
 ### Statistical & Text Analysis
-- Chi-Square Test for independence
-- Standardized Residuals (Z-scores)
-- Topic Modeling
-- Correspondence Analysis
+
+- Chi-Square Test for independence (media outlet vs. sentiment)
+- Standardized Residuals (Z-scores) for identifying significant deviations
+- Topic Modeling for thematic analysis
+- Correspondence Analysis for exploring relationships among categorical variables
+- Entity Network Analysis for mapping relationships between key figures and countries
