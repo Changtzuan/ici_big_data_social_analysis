@@ -32,13 +32,12 @@ all_articles_results <- all_articles_results %>%
 # 只保留 ID 和媒體名稱
 all_articles_results_media <- all_articles_results %>% select(ID, media_source)
 
--------------------------------------------------------
 #ndc資料清理
 # 先去除 all_articles_results_media 中的重複 ID（只取一筆）
-  all_articles_results_unique <- all_articles_results_media %>%
-  group_by(ID) %>%
-  slice(1) %>%
-  ungroup()
+all_articles_results_unique <- all_articles_results_media %>%
+group_by(ID) %>%
+slice(1) %>%
+ungroup()
 
 # 針對ndc執行 left_join（不會加入不存在的 ID）
 ndc_articles_NER <- ndc_articles_NER %>%
@@ -52,40 +51,38 @@ ndc_articles_NER_clean <- ndc_articles_NER %>%
 ndc_articles_NER_clean <- ndc_articles_NER_clean %>%
   filter(str_trim(ner_result) != "set()")
 
-
--------------------------------------------------------
 #udn資料清理
 # 執行 left_join（不會加入不存在的 ID）
 udn_articles_NER_clean <- udn_articles_NER %>%
   left_join(all_articles_results_media, by = "ID")
--------------------------------------------------------
+
 #拆解NER
 library(tidyr)
 
 # 定義解析 ner_result 的函數
-  parse_ner_result <- function(text) {
-  if (is.na(text) || str_trim(text) == "" || str_trim(text) == "set()") {
+parse_ner_result <- function(text) {
+if (is.na(text) || str_trim(text) == "" || str_trim(text) == "set()") {
+  return(NULL)
+}
+
+text <- str_remove_all(text, "^\\{|\\}$")  # 移除最外層 {}
+parts <- str_split(text, "\\), \\(")[[1]]  # 拆成多筆實體
+parts <- str_remove_all(parts, "^\\(|\\)$")  # 拿掉每一筆頭尾 ()
+
+tuples <- lapply(parts, function(part) {
+  fields <- str_split(part, ",\\s*")[[1]]
+  if (length(fields) >= 4) {
+    entity_type <- str_remove_all(fields[3], "^'|'")
+    entity_text <- str_remove_all(fields[4], "^'|'")
+    return(data.frame(entity_type = entity_type, entity_text = entity_text, stringsAsFactors = FALSE))
+  } else {
     return(NULL)
   }
-  
-  text <- str_remove_all(text, "^\\{|\\}$")  # 移除最外層 {}
-  parts <- str_split(text, "\\), \\(")[[1]]  # 拆成多筆實體
-  parts <- str_remove_all(parts, "^\\(|\\)$")  # 拿掉每一筆頭尾 ()
-  
-  tuples <- lapply(parts, function(part) {
-    fields <- str_split(part, ",\\s*")[[1]]
-    if (length(fields) >= 4) {
-      entity_type <- str_remove_all(fields[3], "^'|'")
-      entity_text <- str_remove_all(fields[4], "^'|'")
-      return(data.frame(entity_type = entity_type, entity_text = entity_text, stringsAsFactors = FALSE))
-    } else {
-      return(NULL)
-    }
-  })
-  
-  result <- bind_rows(tuples)
-  return(result)
-  }
+})
+
+result <- bind_rows(tuples)
+return(result)
+}
 
 # ndc dataset 展開實體
 ndc_entities <- ndc_articles_NER_clean %>%
@@ -102,7 +99,7 @@ udn_entities <- udn_articles_NER_clean %>%
   unnest(parsed) %>%
   ungroup() %>%
   select(ID, media_source, entity_type, entity_text)
---------------------------------------------------------
+
 #將兩筆資料合併為一個總表
 all_entities <- bind_rows(ndc_entities, udn_entities)
 
@@ -136,8 +133,9 @@ type_labels <- c(
 all_entities_count_labeled <- all_entities_count %>%
   mutate(label = type_labels[entity_type])
 
-
-
+all_entities_count_media_labeled <- all_entities %>%
+  count(media_source, entity_type, sort = TRUE) %>%
+  mutate(label = type_labels[entity_type])
 
 # 自訂顏色（依照圖 2 色階，可調整數量或更換色碼）
 
@@ -164,6 +162,7 @@ custom_colors_1 <- c(
   "#9edae5"   # 淡水藍
 )
 
+library(ggplot2)
 ggplot(all_entities_count_labeled, aes(x = reorder(label, n), y = n, fill = label)) +
   geom_col() +
   coord_flip() +
@@ -180,16 +179,13 @@ ggplot(all_entities_count_labeled, aes(x = reorder(label, n), y = n, fill = labe
     legend.position = "none"
   )
 
-
-----------------------------------
-#各媒體比例屠
-
-
+# 各媒體比例圖
 all_entities_pct <- all_entities_count_media_labeled %>%
   group_by(media_source) %>%
   mutate(pct = n / sum(n)) %>%
   ungroup()
 
+library(scales)
 ggplot(all_entities_pct, aes(x = reorder(media_source, -n), y = pct, fill = label)) +
   geom_col(position = "fill") +
   coord_flip() +
@@ -200,43 +196,39 @@ ggplot(all_entities_pct, aes(x = reorder(media_source, -n), y = pct, fill = labe
     y = "Proportion",
     fill = "Entity Type"
   ) +
-  theme_minimal(base_family = "msjh") +
+  theme_minimal() +
   theme(
     legend.position = "right",
     axis.text = element_text(size = 12),
     plot.title = element_text(size = 16, face = "bold", hjust = 0.5)
   )
 
-----------------------------------
-#每一家媒體
-media_list <- c("經濟日報", "聯合報", "中央通訊社", "ETtoday", "自由時報")
-
+# 單一媒體
+media_list <- c("經濟日報", "聯合報", "中央通訊社", "ETtoday", "自由時報", "公視新聞網")
 all_entities_pct_filtered <- all_entities_pct %>%
   filter(media_source %in% media_list)
 
 plot_media_entity_pct <- function(data, media_name) {
   data %>%
     filter(media_source == media_name) %>%
-    ggplot(aes(x = pct, y = reorder(label, pct), fill = label)) +  # 使用 label 當 fill 分組
+    ggplot(aes(x = pct, y = reorder(label, pct), fill = label)) +
     geom_col() +
-    scale_fill_manual(values = custom_colors_1) +  # 套用自訂色
+    scale_fill_manual(values = custom_colors_1) +
     scale_x_continuous(labels = percent_format()) +
     labs(
       title = paste(media_name, "Proportional Composition of Entity Types"),
-      x = "Entity Type",
-      y = "Frequency",
-      fill = "Entity Type"  # 圖例名稱（可選）
+      x = "Proportion",
+      y = "Entity Type",
+      fill = "Entity Type"
     ) +
-    theme_minimal(base_family = "msjh") +
+    theme_minimal() +
     theme(
       axis.text = element_text(size = 12),
       plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
-      legend.position = "none"  # 如果你不想顯示圖例，可開啟這行
+      legend.position = "none"
     )
 }
-plot_media_entity_pct(all_entities_pct_filtered, "自由時報")
-plot_media_entity_pct(all_entities_pct_filtered, "ETtoday")
-plot_media_entity_pct(all_entities_pct_filtered, "中央通訊社")
-plot_media_entity_pct(all_entities_pct_filtered, "聯合報")
-plot_media_entity_pct(all_entities_pct_filtered, "經濟日報")
 
+for (m in media_list) {
+  print(plot_media_entity_pct(all_entities_pct_filtered, m))
+}
