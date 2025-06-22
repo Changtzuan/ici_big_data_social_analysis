@@ -471,37 +471,61 @@ ici_big_data_social_analysis\                                                 # 
 We applied a full-stack NLP pipeline and multiple visualization techniques to uncover how Taiwanese media framed Donald Trump during the 2024 U.S. presidential election. Below are the core analyses and their associated insights:
 
 ### 🧠 Vocabulary & Framing Patterns
+
+#### 1. High-Frequency Words & Media Composition
+
 ![Q1_ Top 20 Trump-Related Words (Media Composition)](Analysis/Q1%20Vocabulary%20&%20Framing%20Patterns/Top-20%20Words%20(Media%20Composition).png)
 
-We analyzed word usage across outlets using CKIPTagger-based segmentation. Common patterns included high-frequency personal names (Trump, Biden, Harris) and evaluative terms like believe, may, and state, indicating personalized and subjective media framing.
+The bar chart of the top 20 Trump-related words shows that **personal names and country names**—such as `USA`, `Trump`, `Harris`, `President`, `Biden`, and `Taiwan`—dominate the coverage. These terms vary in frequency across different media sources, indicating diverse editorial focuses. Other frequent terms include `Report`, `Candidate`, `China`, and `Democrats`, reflecting an emphasis on political figures, countries, and election-related issues.
 
-### 📰 Sentiment by Media Outlet
-圖
+#### 2. Word Cloud Comparison: With vs. Without Stopwords
 
-*We compared sentiment polarity (Supportive / Neutral / Oppositional) using both CSentiPackage and LLM-based labeling. PTS and Liberty Times showed more positive framing, while CNA and ETtoday remained mostly neutral—reflecting ideological variance across the media landscape.*
+![Q1_ Wordcloud)](Analysis/Q1%20Vocabulary%20&%20Framing%20Patterns/Wordcloud.png)
 
-### 🔍 Statistical Significance of Framing
-圖
+- **With Stopword Removal:**  
+  The word cloud highlights evaluative and action-oriented terms like `support`, `voter`, `policy`, `believe`, and `activity`. These words suggest that media framing often involves subjective assessments, attitudes toward candidates, and policy discussions. Across various news categories (politics, international, finance), words such as `support` and `policy` are consistently prominent.
 
-*A chi-square test revealed statistically significant framing deviations. For instance, PTS had more positive coverage than expected, while ETtoday significantly underrepresented such framing—highlighting bias patterns aligned with outlet orientation.*
+![Q1_ Wordcloud)](Analysis/Q1%20Vocabulary%20&%20Framing%20Patterns/Wordcloud_NoStop.png)
+
+- **Without Stopword Removal:**  
+  In the absence of stopword filtering, the word cloud is heavily dominated by **proper nouns** and **geopolitical terms**: `USA`, `Trump`, `Biden`, `Harris`, `President`, `Taiwan`, `TSMC`, and `market`. This demonstrates that, without filtering, the discourse is shaped primarily by the main actors and locations in the news stories.
+
+### 📰 Framing Patterns by Media Outlet
+
+
+#### 1. Framing Distribution
+
+![Q2_ Framing Distribution by Media Outlet](Analysis/Q2%20Sentiment%20by%20Media%20Outlet%20&%20Statistical%20Significance%20of%20Framing/Framing%20Distribution%20by%20Media%20Outlet.png)
+
+The distribution of framing stances varies noticeably across different media outlets. Most outlets tend to adopt a predominantly neutral stance in their reporting. However, some outlets, such as Liberty Times and PTS, display a higher proportion of supportive or oppositional frames compared to others. This suggests that while neutrality is common, certain outlets are more likely to take a clear stance in their coverage.
+
+#### 2. Statistical Significance
+
+To determine whether these differences in framing are meaningful, a chi-square test was conducted. The results indicate that the variation in framing across media outlets is highly significant (p < 2.2e-16). This confirms that the distribution of stances is not random; rather, each media outlet systematically exhibits its own framing patterns.
+
+#### 3. Residual Heatmap: Media vs. Framing
+
+![Q2_ Standardized Residual Heatmap (Media x Framing)](Analysis/Q2%20Sentiment%20by%20Media%20Outlet%20&%20Statistical%20Significance%20of%20Framing/Standardized%20Residual%20Heatmap%20(Media%20x%20Framing).png)
+
+The residual heatmap further illustrates how each media outlet deviates from what would be expected if framing were distributed randomly. For instance, Liberty Times and ETtoday show a much higher frequency of supportive framing than expected, while United Daily News (聯合報) demonstrates a stronger oppositional stance. In contrast, Central News Agency (中央通訊社) significantly underrepresents supportive framing. These patterns, highlighted in the heatmap by positive (red) and negative (blue) residuals, reveal the unique framing biases of each outlet.
 
 ### 🕒 Temporal Coverage Trends
-![Q4_ 報導數量時間圖(完整的)](https://github.com/user-attachments/assets/8ad760de-57a0-4dab-ada2-5ac7fd8b004b)
+![Q3_ Number of Trump-related news reports during the 2024 election period with big events (weekly statistics).png](Analysis/Q3%20Temporal%20Coverage%20Trends%20&%20Sentiment%20Shifts%20Over%20Time/Number%20of%20Trump-related%20news%20reports%20during%20the%202024%20election%20period%20with%20big%20events%20(weekly%20statistics).png)
 
-Media attention followed a U-shaped curve: peaking after Biden’s withdrawal (July) and Trump’s victory (November), with a lull mid-campaign. The sharp rise in late October aligned with election momentum and reflected media re-engagement.
+The volume of Trump-related news reports during the 2024 election period displayed a distinct U-shaped pattern. Coverage surged sharply following Biden’s withdrawal in late July, marking the first major peak. After this event, the number of articles gradually declined and remained relatively steady through August and September, with only minor fluctuations around other campaign milestones, such as polling leads and candidate debates. However, as the election approached, media attention intensified again. There was a pronounced spike in late October, coinciding with the final campaign push, and coverage reached its highest point immediately after Trump’s victory in early November. These trends suggest that media interest was closely tied to major electoral events, with significant increases in reporting activity both at the outset and conclusion of the campaign period.
 
 ### 📈 Sentiment Shifts Over Time
-圖
+![Q3_ Trend of stance proportions over time (by week).png](Analysis/Q3%20Temporal%20Coverage%20Trends%20&%20Sentiment%20Shifts%20Over%20Time/Trend%20of%20stance%20proportions%20over%20time%20(by%20week).png)
 
-*Neutral reporting dominated (>75%) throughout the cycle. However, positive sentiment peaked after Trump’s election win, suggesting media shifted tone in response to political outcomes. Negative coverage remained minimal.*
+Throughout the campaign, neutral reporting was the dominant framing category, consistently accounting for the majority of coverage each week. The proportion of neutral articles generally hovered above 50% and often approached or exceeded 70%, especially during periods of less dramatic political activity. Negative (oppositional) framing maintained a steady presence but rarely surpassed the neutral category, while positive (supportive) coverage remained minimal for most of the campaign. Notably, there was a slight increase in supportive sentiment immediately following Trump’s election victory in early November, indicating a temporary shift in media tone in response to the outcome. Despite this brief uptick, oppositional and supportive stances were both overshadowed by the prevalence of neutral reporting, highlighting the media’s tendency to maintain a balanced perspective during the election cycle.
 
 ### 🧾 Entity Network Analysis
-![Q4_ Distribution of Entity Types (Trump-Related News)](https://github.com/user-attachments/assets/a040dac5-c0af-4813-9010-1d22e6c7886e)
-![image](https://github.com/user-attachments/assets/04ac3bcf-7dba-42fd-a094-570912f97700)
+![Q4_ Network of Words](Analysis/Q4%20Entity%20Network%20Analysis/All_TrumpNetwork.png)
 
-Using NER, we observed that PERSON entities (Trump, Harris, etc.) dominated, followed by geopolitical (GPE) and organizational (ORG) terms. This reflects both the personalization of news and its anchoring in global political context.
+The entity network analysis of Trump-related news reveals several important patterns in both the structure of associations and the types of entities most frequently mentioned. The word network diagram, with Trump at its center, highlights the dense web of connections linking him to a diverse array of individuals, locations, organizations, and political topics. Notably, Trump is closely associated with other key political figures such as Kamala Harris and Joe Biden, as well as with major U.S. states, political parties, and international actors like China, Taiwan, Japan, and Russia. This illustrates the global scope and multifaceted nature of media coverage surrounding Trump, extending beyond domestic politics into international relations and economic affairs. Additionally, the presence of media organizations and news agencies as prominent nodes underscores the influential role of the press in shaping the narrative around Trump.
 
-The word cloud above further illustrates this phenomenon in Mandarin-language coverage. Prominent names such as 賀錦麗 (Kamala Harris), 川普 (Donald Trump), and keywords like 總統 (president), 白宮 (White House), and 民主／共和黨 (Democratic/Republican Party) appear frequently. The visual prominence of person names and political terms reinforces the focus on individuals and partisan dynamics in media framing.
+![Q4_ Distribution of Entity Types (Trump-Related News)](Analysis/Q4%20Entity%20Network%20Analysis/Distribution%20of%20Entity%20Types%20(Trump-Related%20News).png)
+The bar chart depicting the distribution of entity types in Trump-related news further clarifies the focus of media reporting. The most frequently mentioned entities are people (PERSON) and geopolitical entities (GPE), emphasizing the centrality of individuals and countries or regions in news stories about Trump. Organizations (ORG) and dates (DATE) also feature prominently, reflecting the importance of institutions, political parties, and the timing of events in the news cycle. Quantitative entities, such as numbers, percentages, and monetary amounts, appear regularly, indicating that economic analysis and statistical reporting are common themes. Other entity types, including demographic groups, locations, and specific events, point to the broad and varied contexts in which Trump is discussed.
 
 ### 🤖 LLM Performance Benchmark
 ![InnoFest (1)](https://github.com/user-attachments/assets/c06e6ebe-68a6-45e2-a243-b1a56051416a)
