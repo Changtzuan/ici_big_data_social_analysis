@@ -471,7 +471,7 @@ ici_big_data_social_analysis\                                                 # 
 We applied a full-stack NLP pipeline and multiple visualization techniques to uncover how Taiwanese media framed Donald Trump during the 2024 U.S. presidential election. Below are the core analyses and their associated insights:
 
 ### 🧠 Vocabulary & Framing Patterns
-![Q1_ Top 20 Trump-Related Words (Media Composition)](https://github.com/user-attachments/assets/2cf27ff1-8fb6-4772-a875-26af842ed947)
+![Q1_ Top 20 Trump-Related Words (Media Composition)](Analysis/Q1%20Vocabulary%20&%20Framing%20Patterns/Top-20%20Words%20(Media%20Composition).png)
 
 We analyzed word usage across outlets using CKIPTagger-based segmentation. Common patterns included high-frequency personal names (Trump, Biden, Harris) and evaluative terms like believe, may, and state, indicating personalized and subjective media framing.
 
