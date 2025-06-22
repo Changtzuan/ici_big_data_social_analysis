@@ -8,14 +8,14 @@ import re
 import numpy as np
 
 # 指定字型路徑
-font_path = "Analysis/NotoSansCJKtc-Regular.otf"  # 確保路徑正確
+font_path = "NotoSansCJKtc-Regular.otf"  # 確保路徑正確
 font_prop = FontProperties(fname=font_path)
 
 # %% 讀取兩個檔案
 # 讀取數據
-df1 = pd.read_csv("UDNdata/udn_articles_NER.csv") 
-df2 = pd.read_csv("NDCdata/ndc_articles_NER.csv") 
-df = pd.read_csv("all_articles.csv")
+df1 = pd.read_csv("../UDNdata/udn_articles_NER.csv") 
+df2 = pd.read_csv("../NDCdata/ndc_articles_NER.csv") 
+df = pd.read_csv("../all_articles.csv")
 
 # 合併新聞類型到 df1
 df1 = pd.merge(df1, df[['識別碼', 'folder']], left_on='ID', right_on='識別碼', how='left')

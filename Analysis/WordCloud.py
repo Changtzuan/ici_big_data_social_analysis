@@ -7,9 +7,9 @@ import numpy as np
 from matplotlib.font_manager import FontProperties
 
 # %% 讀取兩個檔案
-df1 = pd.read_csv("UDNdata/udn_articles_POS.csv") 
-df2 = pd.read_csv("NDCdata/ndc_articles_POS.csv") 
-df = pd.read_csv("all_articles.csv")
+df1 = pd.read_csv("../UDNdata/udn_articles_POS.csv") 
+df2 = pd.read_csv("../NDCdata/ndc_articles_POS.csv") 
+df = pd.read_csv("../all_articles.csv")
 df1 = pd.merge(df1, df[['識別碼', 'folder']], left_on='ID', right_on='識別碼', how='left')
 df1 = df1[['ID', 'word', 'pos', 'count', 'folder']]
 df1 = df1.rename(columns={'folder': 'Type'})
@@ -34,10 +34,10 @@ distinctive_tags = [
 ]
 
 # 讀取剪影圖片並生成遮罩
-mask = np.array(Image.open("Analysis/trump.webp"))  # 替換為你的剪影圖片檔案名稱
+mask = np.array(Image.open("trump.webp"))  # 替換為你的剪影圖片檔案名稱
 
 # 指定字型路徑
-font_path = "Analysis/NotoSansCJKtc-Regular.otf"  # 確保路徑正確
+font_path = "NotoSansCJKtc-Regular.otf"  # 確保路徑正確
 font_prop = FontProperties(fname=font_path, size=44)
 
 # %% 過濾停用詞和無效字
