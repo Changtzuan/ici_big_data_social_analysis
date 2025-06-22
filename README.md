@@ -141,15 +141,12 @@ flowchart LR
         A2["📺 PTS News Collection<br/>(PTSdata.py)"]
         A3["📰 UDN News Collection<br/>(UDNdata.py)"]
       end
-      
       A1 --> B1["📄 NDC Articles<br/>ndc_articles.csv"]
       A2 -.-> B2["📄 PTS Articles<br/>pts_articles.csv"]
       A3 --> B3["📄 UDN Articles<br/>udn_articles.csv"]
-      
       B2 -.->|Manual Merge| B1
     end
     
-    %% Direct connections from Data Collection to branches
     DC --> TP_DIST[ ]
     DC --> SB_DIST[ ]
     DC --> DI_DIST[ ]
@@ -158,7 +155,6 @@ flowchart LR
       direction TB
       TP_DIST -.-> D1["⚙️ CKIP_NDC.R<br/>Chinese NLP Processing"]
       TP_DIST -.-> D2["⚙️ CKIP_UDN.R<br/>Chinese NLP Processing"]
-      
       D1 --> E1["📋 NDC Processed<br/>• ndc_articles_POS.csv<br/>• ndc_articles_NER.csv"]
       D2 --> E2["📋 UDN Processed<br/>• udn_articles_POS.csv<br/>• udn_articles_NER.csv"]
     end
@@ -177,7 +173,6 @@ flowchart LR
       H1 --> I1["📊 Complete Dataset<br/>all_articles.csv"]
     end
     
-    %% Manual Analysis entry
     I2 --> MA_DIST[ ]
     
     subgraph MA ["👥 Manual Analysis Phase"]
@@ -186,7 +181,6 @@ flowchart LR
       J1 --> K1["📋 Labelled Dataset<br/>Labelled.csv"]
     end
     
-    %% AI Analysis entries
     I1 --> AI_DIST1[ ]
     K1 --> AI_DIST2[ ]
     
@@ -194,30 +188,32 @@ flowchart LR
       direction TB
       AI_DIST1 -.-> L1["🚀 AI Analysis<br/>(Complete Dataset)"]
       AI_DIST2 -.-> L2["🚀 AI Analysis<br/>(Labeled Dataset)"]
-      
       L1 --> M1["🔧 Label_OneStep.py<br/>Label_TwoSteps.py"]
       L2 --> M2["🔧 Label_OneStep.py<br/>Label_TwoSteps.py"]
-      
       M1 --> N1["📈 AI Results<br/>all_articles_results.csv"]
       M2 --> N2["📊 LLMsSCORE<br/>Model Comparison Results"]
     end
     
-    %% Final Analysis entries
     E1 --> FA_DIST1[ ]
     E2 --> FA_DIST2[ ]
     N1 --> FA_DIST3[ ]
     N2 --> FA_DIST4[ ]
     
+    %% ========== Final Analysis Phase with Q1-Q4 ==========
     subgraph FA ["📈 Final Analysis Phase"]
       direction TB
-      FA_DIST1 -.-> O1["🔬 Comprehensive Analysis"]
-      FA_DIST2 -.-> O1
-      FA_DIST3 -.-> O1
-      FA_DIST4 -.-> O1
+      FA_DIST1 -.-> Q1["Q1: Vocabulary &<br/> Framing Patterns<br/>資料來源: POS (NDC, UDN)"]
+      FA_DIST2 -.-> Q4["Q4: Entity Network Analysis<br/>資料來源: NER (NDC, UDN)"]
+      FA_DIST3 -.-> Q2["Q2: Sentiment by Media Outlet <br/>& Statistical Significance of Framing"]
+      FA_DIST3 -.-> Q3["Q3: Temporal Coverage Trends <br/>& Sentiment Shifts Over Time"]
+      FA_DIST4 -.-> O1["🔬 Comprehensive Analysis"]
+      Q1 --> O1
+      Q2 --> O1
+      Q3 --> O1
+      Q4 --> O1
       O1 --> P1["📋 Final Research Results<br/>Combined Insights"]
     end
-    
-    %% Styling for subgraphs
+
     style DC fill:#e1f5fe,stroke:#01579b,stroke-width:4px,color:#000
     style NEWS fill:#f0f8ff,stroke:#4682b4,stroke-width:2px,color:#000
     style TP fill:#f3e5f5,stroke:#4a148c,stroke-width:4px,color:#000
@@ -227,7 +223,6 @@ flowchart LR
     style AI fill:#fff8e1,stroke:#f57f17,stroke-width:4px,color:#000
     style FA fill:#f1f8e9,stroke:#33691e,stroke-width:4px,color:#000
     
-    %% Styling for nodes
     classDef collection fill:#e1f5fe,stroke:#01579b,stroke-width:3px,color:#000,font-size:14px
     classDef processing fill:#f3e5f5,stroke:#4a148c,stroke-width:3px,color:#000,font-size:14px
     classDef sampling fill:#fff3e0,stroke:#e65100,stroke-width:3px,color:#000,font-size:14px
@@ -244,7 +239,7 @@ flowchart LR
     class H1,H2 integration
     class J1 manual
     class L1,L2,M1,M2 ai
-    class O1 final
+    class Q1,Q2,Q3,Q4,O1 final
     class B1,B2,B3,E1,E2,G1,I1,I2,K1,N1,N2,P1 data
     class TP_DIST,SB_DIST,DI_DIST,MA_DIST,AI_DIST1,AI_DIST2,FA_DIST1,FA_DIST2,FA_DIST3,FA_DIST4 invisible
 ```
@@ -271,14 +266,28 @@ flowchart LR
 Make sure you have R installed. Install the required R packages by running the following commands in your R console:
 
 ```R
-install.packages("readr")       # For reading and writing CSV files
-install.packages("rvest")       # For web scraping
-install.packages("dplyr")       # For data manipulation
-install.packages("stringr")     # For string processing
-install.packages("purrr")       # For functional programming
-install.packages("httr")        # For HTTP requests
-install.packages("progressr")   # For progress bar display
-install.packages("reticulate")  # To call Python from R
+# Data reading and manipulation
+install.packages("readr")        # For reading and writing CSV files
+install.packages("dplyr")        # For data manipulation
+install.packages("tidyr")        # For data tidying
+
+# String processing
+install.packages("stringr")      # For string processing
+
+# Data visualization
+install.packages("ggplot2")      # For data visualization
+install.packages("showtext")     # For font support in plots
+install.packages("systemfonts")  # For system font management
+
+# Date and time handling
+install.packages("lubridate")    # For date and time processing
+
+# Advanced functionality
+install.packages("purrr")        # For functional programming
+install.packages("httr")         # For HTTP requests
+install.packages("rvest")        # For web scraping
+install.packages("progressr")    # For progress bar display
+install.packages("reticulate")   # To call Python from R
 ```
 
 #### **Python Environment**
@@ -291,6 +300,8 @@ pip install playwright==1.48.0   # Asynchronous browser automation
 pip install selenium==4.10.0     # Browser automation
 pip install ckiptagger==0.2.1    # Chinese word segmentation
 pip install tqdm==4.67.1         # Progress bar display
+pip install wordcloud==1.9.4     # Word cloud visualization
+pip install networkx==3.1        # Network analysis
 ```
 
 #### **CKIPTagger Setup**
@@ -367,51 +378,73 @@ After completing all steps, you should have:
 ### **Project Directory Structure**
 
 ```plaintext
-ici_big_data_social_analysis\                  # Project root directory
+ici_big_data_social_analysis\                                                 # Project root directory
 |
-├── .git\                                      # Git version control folder
+├── .git\                                                                     # Git version control folder
 |
-├── LLMsSCORE\                                 # Scores of various LLMs for classifying 100 sampled articles using two prompts
+├── Analysis\                                                                 # Analytical scripts, plots, and results
+|
+├── Q1 Vocabulary & Framing Patterns\                                         # Vocabulary and framing pattern analysis
+│   │   ├── [word cloud images]
+│   │   ├── [top-20 words plots]
+│   │   ├── Q1.R
+│   │   ├── WordCloud.py
+│
+│   ├── Q2 Sentiment by Media Outlet & Statistical Significance of Framing\   # Sentiment & framing significance
+│   │   ├── [chi-square test plots, distribution charts]
+│   │   ├── Q2.R
+│
+│   ├── Q3 Temporal Coverage Trends & Sentiment Shifts Over Time\             # Temporal trends & sentiment shift
+│   │   ├── [trend charts, event-marked plots]
+│   │   ├── Q3.R
+│
+│   ├── Q4 Entity Network Analysis\                                           # Entity network analysis
+│   │   ├── [network graphs, entity distribution plots]
+│   │   ├── Q4.R
+│   │   ├── WordNetwork.py
+│   │   ├── [font files/other resources]
+
+├── LLMsSCORE\                                                               # Scores of various LLMs for classifying 100 sampled articles using two prompts
 │   ├── [LLM result-related files]
 │
-├── NDCdata\                                   # NDC news-related data
-│   ├── ndc_articles_sampled\                  # Stores full text of 100 randomly sampled articles
-│   ├── trump_articles\                        # Stores full text of all categorized news articles
-│   ├── trump_articles_POS_TXT\                # Stores WS+POS processed full text of all categorized news articles
-│   ├── [News category folders]                # E.g., Cross-Strait News, Breaking News, etc.
-│   │   ├── trump_articles\                    # Full text of news articles in the specific category
-│   │   ├── trump_articles_[category].R        # Script for scraping and processing news articles in the category
-│   │   ├── trump_articles_[category].csv      # Exported news data for the category (output from trump_articles_[category].R)
-│   ├── ndc_articles.csv                       # Complete dataset of NDC news (output from CKIP_NDC.R)
-│   ├── ndc_articles_NER.csv                   # NER results for NDC news (output from CKIP_NDC.R)
-│   ├── ndc_articles_POS.csv                   # WS+POS results for NDC news (output from CKIP_NDC.R)
-│   ├── ndc_articles_sampled.csv               # 100 randomly sampled NDC news articles (output from Sample.py)
-│   ├── PTSdata.py                             # Script using Playwright to scrape NDC news
+├── NDCdata\                                                                 # NDC news-related data
+│   ├── ndc_articles_sampled\                                                # Stores full text of 100 randomly sampled articles
+│   ├── trump_articles\                                                      # Stores full text of all categorized news articles
+│   ├── trump_articles_POS_TXT\                                              # Stores WS+POS processed full text of all categorized news articles
+│   ├── [News category folders]                                              # E.g., Cross-Strait News, Breaking News, etc.
+│   │   ├── trump_articles\                                                  # Full text of news articles in the specific category
+│   │   ├── trump_articles_[category].R                                      # Script for scraping and processing news articles in the category
+│   │   ├── trump_articles_[category].csv                                    # Exported news data for the category (output from trump_articles_[category].R)
+│   ├── ndc_articles.csv                                                     # Complete dataset of NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_NER.csv                                                 # NER results for NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_POS.csv                                                 # WS+POS results for NDC news (output from CKIP_NDC.R)
+│   ├── ndc_articles_sampled.csv                                             # 100 randomly sampled NDC news articles (output from Sample.py)
+│   ├── PTSdata.py                                                           # Script using Playwright to scrape NDC news
 │
-├── UDNdata\                                   # UDN news-related data
-│   ├── trump_articles\                        # Stores full text of all categorized news articles
-│   ├── trump_articles_POS_TXT\                # Stores WS+POS processed full text of all categorized news articles
-│   ├── udn_articles_sampled\                  # Stores full text of 100 randomly sampled articles
-│   ├── udn_articles.csv                       # Complete dataset of UDN news (output from UDNdata.py)
-│   ├── udn_articles_NER.csv                   # NER results for UDN news (output from CKIP_UDN.R)
-│   ├── udn_articles_POS.csv                   # WS+POS results for UDN news (output from CKIP_UDN.R)
-│   ├── udn_articles_sampled.csv               # 100 randomly sampled UDN news articles (output from Sample.py)
-│   ├── UDNdata.py                             # Script using Selenium to scrape UDN news
+├── UDNdata\                                                                 # UDN news-related data
+│   ├── trump_articles\                                                      # Stores full text of all categorized news articles
+│   ├── trump_articles_POS_TXT\                                              # Stores WS+POS processed full text of all categorized news articles
+│   ├── udn_articles_sampled\                                                # Stores full text of 100 randomly sampled articles
+│   ├── udn_articles.csv                                                     # Complete dataset of UDN news (output from UDNdata.py)
+│   ├── udn_articles_NER.csv                                                 # NER results for UDN news (output from CKIP_UDN.R)
+│   ├── udn_articles_POS.csv                                                 # WS+POS results for UDN news (output from CKIP_UDN.R)
+│   ├── udn_articles_sampled.csv                                             # 100 randomly sampled UDN news articles (output from Sample.py)
+│   ├── UDNdata.py                                                           # Script using Selenium to scrape UDN news
 │
-├── sample_articles\                           # Stores full text of 100 randomly sampled articles (combined from NDC and UDN)
+├── sample_articles\                                                         # Stores full text of 100 randomly sampled articles (combined from NDC and UDN)
 │
-├── all_articles.csv                           # Complete dataset of all news articles (output from MergeData.R)
-├── all_articles_results.csv                   # AI model analysis results for all news articles (using OpenAI-o3, output from Label_OneStep.py)
-├── sampled_articles.csv                       # 100 randomly sampled articles (output from MergeData.R)
-├── Labelled.csv                               # 100 manually labeled news articles
+├── all_articles.csv                                                         # Complete dataset of all news articles (output from MergeData.R)
+├── all_articles_results.csv                                                 # AI model analysis results for all news articles (using OpenAI-o3, output from Label_OneStep.py)
+├── sampled_articles.csv                                                     # 100 randomly sampled articles (output from MergeData.R)
+├── Labelled.csv                                                             # 100 manually labeled news articles
 |
-├── CKIP_NDC.R                                 # Uses CKIPTagger to analyze NDC news data
-├── CKIP_UDN.R                                 # Uses CKIPTagger to analyze UDN news data
-├── MergeData.R                                # Combines and processes multiple datasets
+├── CKIP_NDC.R                                                               # Uses CKIPTagger to analyze NDC news data
+├── CKIP_UDN.R                                                               # Uses CKIPTagger to analyze UDN news data
+├── MergeData.R                                                              # Combines and processes multiple datasets
 |
-├── Label_OneStep.py                           # Uses OpenAI API for one-step sentiment and label analysis of news articles
-├── Label_TwoSteps.py                          # Uses OpenAI API for two-step sentiment and label analysis of news articles
-├── Sample.py                                  # Randomly selects 100 news articles for manual labeling
+├── Label_OneStep.py                                                         # Uses OpenAI API for one-step sentiment and label analysis of news articles
+├── Label_TwoSteps.py                                                        # Uses OpenAI API for two-step sentiment and label analysis of news articles
+├── Sample.py                                                                # Randomly selects 100 news articles for manual labeling
 ```
 
 ### **File Relationships**
@@ -431,7 +464,10 @@ ici_big_data_social_analysis\                  # Project root directory
 | `all_articles.csv`          | `MergeData.R`             | Combined dataset of all NDC and UDN news articles                            |
 | `all_articles_results.csv`  | `Label_OneStep.py`        | Sentiment and label analysis results for all news articles using OpenAI-o3   |
 | `Labelled.csv`              | Manual labeling           | 100 manually labeled news articles                                           |
-
+| **Q1: POS Results**              | `ndc_articles_POS.csv`, `udn_articles_POS.csv` | Used for vocabulary & framing pattern analysis (word clouds, top words, etc.)    |
+| **Q2: Sentiment & Framing**      | `all_articles_results.csv`  | Used for sentiment by media outlet & framing significance (Q2 analysis)         |
+| **Q3: Temporal & Sentiment Trends** | `all_articles_results.csv`  | Used for temporal coverage trends & sentiment shifts over time (Q3 analysis)     |
+| **Q4: NER Results**              | `ndc_articles_NER.csv`, `udn_articles_NER.csv` | Used for entity network analysis (Q4 analysis)                                  |
 
 ## Analysis
 
