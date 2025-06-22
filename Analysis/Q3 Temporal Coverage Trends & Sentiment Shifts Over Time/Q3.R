@@ -3,9 +3,10 @@
 
 library(readr)
 library(dplyr)
+library(ggplot2)
+library(lubridate)
 
 all_articles_results <- read_csv("all_articles_results.csv")
-
 
 #改變來源媒體 和 LLM 的欄位名稱 以利作業
 all_articles_results <- all_articles_results %>%
@@ -25,15 +26,14 @@ all_articles_results <- all_articles_results %>%
 
 #轉換發布日期的格式
 all_articles_results <- all_articles_results %>%
-  mutate(publish_date = as.Date(as.POSIXct(`發布日期`, format = "%m/%d/%Y %H:%M")))
-
------------------------------------------------------
-
-library(lubridate)
+  mutate(publish_date = as.Date(parse_date_time(
+    `發布日期`,
+    orders = c("m/d/Y H:M", "m/d/Y"))))
 
 # 加入週起始日期欄位（以每週一為基準）
 all_articles_results <- all_articles_results %>%
-  mutate(week = floor_date(publish_date, unit = "week", week_start = 1))
+  mutate(week = floor_date(publish_date, unit = "week", week_start = 1)) %>%
+  filter(media_source=='公視新聞網')
 
 # 統計每週 framing 次數
 framing_by_week <- all_articles_results %>%
@@ -57,8 +57,7 @@ weekly_total <- all_articles_results %>%
   group_by(week) %>%
   summarise(total_articles = n(), .groups = "drop")
 
--------------------------------------------------------
-  #報導數量折線圖（每週新聞篇數變化）#有加時間
+#報導數量折線圖（每週新聞篇數變化）#有加時間
 ggplot(weekly_total, aes(x = week, y = total_articles)) +
   geom_line(color = "#4E79A7", size = 1.2) +
   geom_point(color = "#4E79A7", size = 2) +
@@ -75,11 +74,11 @@ ggplot(weekly_total, aes(x = week, y = total_articles)) +
     axis.text.y = element_text(size = 12),
     plot.title = element_text(face = "bold", size = 16)
   )
----------------------------
-  #報導數量折線圖（每週新聞篇數變化）#有加時間 #有加事件
+
+#報導數量折線圖（每週新聞篇數變化）#有加時間 #有加事件
 event_df <- data.frame(
-    event_date = as.Date(c("2024-07-21", "2024-09-11", "2024-10-14", "2024-10-29", "2024-11-05")),
-    event_label = c("拜登退選\n(7/21)", "川普辯論\n(9/11)", "中共軍演\n(10/14)", "選前高峰\n(10/29)", "川普勝選\n(11/5)")
+    event_date = as.Date(c("2024-07-21", "2024-08-15", "2024-09-11", "2024-10-14", "2024-10-29", "2024-11-05")),
+    event_label = c("拜登退選\n(7/21)", "賀錦麗民調領先\n(8/15)", "候選人辯論\n(9/11)", "中共軍演\n(10/14)", "選前高峰\n(10/29)", "川普勝選\n(11/5)")
   )
   
 ggplot(weekly_total, aes(x = week, y = total_articles)) +
@@ -115,7 +114,6 @@ ggplot(weekly_total, aes(x = week, y = total_articles)) +
   )
 
 
----------------------------
 #立場時間變化圖(有加特定事件)
 ggplot(framing_by_week, aes(x = week, y = proportion, color = RESULT, group = RESULT)) +
   geom_line(size = 1.2) +
@@ -150,7 +148,7 @@ ggplot(framing_by_week, aes(x = week, y = proportion, color = RESULT, group = RE
   
   # 標題與軸標籤
   labs(
-    title = "Trend of stance proportions over time (by week)",
+    title = "Trend of stance proportions over time (by week), PTS",
     x = "Week Start Date",
     y = "Stance Proportion"
   ) +
@@ -164,7 +162,7 @@ ggplot(framing_by_week, aes(x = week, y = proportion, color = RESULT, group = RE
     legend.position = "top",
     plot.title = element_text(face = "bold", size = 16)
   )
---------------------------
+
 #立場比例結構時間變化圖(含事件)
 
 ggplot(framing_by_week, aes(x = week, y = proportion, fill = RESULT)) +
